@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>循环获取元素内容</title>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<ul id="ul1">
+		<li>test1</li>
+		<li>test2</li>
+		<li>test3</li>
+		<li>test4</li>
+		<li>test5</li>
+	</ul>
+	<script>
+	  // 原生js方法
+		window.onload = function () {
+			var oLi = document.getElementsByTagName('li');
+			for (var i = 0; i < oLi.length; i ++) {
+				console.log('原生JS方法' + oLi[i].innerHTML); // 原生js中，innerHTML不是方法
+			}
+		};
+
+		// jquery方法
+		$(document).ready(function () {
+			var oLi = $('li');
+			for (var i = 0; i < oLi.length; i ++) {
+				console.log('jquery方法' + oLi.eq(i).text()); // eq()返回指定索引值的元素
+			}
+		})
+	</script>
+</body>
+</html>
