@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>作用域安全的构造函数</title>
+</head>
+<body>
+	<p>作用域安全的构造函数</p>
+	<script>
+		function Person (name, age) {
+			this.name = name;
+			this.age = age;
+		}
+
+		// 当有new操作符时，一切ok
+		var person = new Person("xiaog", 26);
+		console.log(person.name); // xiaog
+
+		// 当缺少new操作符时，this对象指向window
+		var person2 = Person('xiaog', 26);
+		// console.log(person2.name); // Uncaught TypeError: Cannot read property 'name' of undefined
+		console.log(window.name); // xiaog
+
+		// 作用域安全的构造函数
+		function Person3 (name, age) {
+			if (this instanceof Person) {
+			this.name = name;
+			this.age = age;	
+			} else {
+				return new Person3(name, age);
+			}
+		}
+		var person3 = Person3('xiaog', 26);
+		console.log(person3.name);
+	</script>
+</body>
+</html>
