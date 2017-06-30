@@ -23,15 +23,15 @@
 
 		// 作用域安全的构造函数
 		function Person3 (name, age) {
-			if (this instanceof Person) {
-			this.name = name;
-			this.age = age;	
+			if (this instanceof Person3) {
+				this.name = name;
+				this.age = age;	
 			} else {
 				return new Person3(name, age);
 			}
 		}
 		var person3 = Person3('xiaog', 26);
-		console.log(person3.name);
+		console.log(person3.name); // xiaog
 	</script>
 </body>
 </html>
