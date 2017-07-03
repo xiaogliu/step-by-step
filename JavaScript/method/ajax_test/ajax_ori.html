@@ -1,0 +1,26 @@
+<!-- 配合wamp使用 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>原生ajax库</title>
+  <script src="new_ajax.js"></script>
+</head>
+<script>
+  window.onload = function () {
+    let btn = document.getElementsByTagName('button');
+    let xhr = null;
+
+    btn[0].onclick = function () {
+      newAjax('GET', '4.txt', function(data) {
+        console.log(data);
+      }, function(data) {
+        console.log(data);
+      });
+    }
+  };
+</script>
+<body>
+  <button>点我</button>
+</body>
+</html>
