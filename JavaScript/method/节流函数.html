@@ -1,0 +1,28 @@
+<!-- 设置节流函数的目的是避免过多的DOM操作：连续的DOM无实际意义，设置时间差不影响用户体验，却能极大减少浏览器的计算量 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<script>
+	window.onload = function () {
+		// 设置节流定时器
+		let viewPortWidth = document.getElementById('viewPortWidth');
+		viewPortWidth.innerHTML = document.body.clientWidth + 'px';
+		let resizeTimer = null;
+		window.onresize = function () {
+			if (resizeTimer) {
+				clearTimeout(resizeTimer);
+			}
+			resizeTimer = setTimeout(function () {
+				// 实际要执行的函数
+				viewPortWidth.innerHTML = document.body.clientWidth + 'px';
+			}, 200);
+		}
+	};
+</script>
+<body>
+	<p>当前窗口宽度是：<span id="viewPortWidth"></span></p>
+</body>
+</html>
