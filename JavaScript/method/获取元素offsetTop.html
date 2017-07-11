@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>offsetTop</title>
+	<style>
+		body {
+			margin: 0;
+		}
+		.div0 {
+			position: relative;
+			width: 100px;
+			height: 300px;
+			background-color: pink;
+		}
+		.div1 {
+			position: relative;
+			padding-top: 10px;
+			width: 100px;
+			height: 600px;
+			background-color: red;
+		}
+		.div2 {
+			position: relative;
+			padding-top: 10px;
+			width: 100px;
+			height: 300px;
+			background-color: green;
+		}
+		#testEle {
+			width: 100px;
+			height: 10px;
+			background-color: yellow;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			var testEle = document.getElementById('testEle');
+			var testElePosi = getElementTop(testEle);
+
+			// 获取元素offsetTop(元素的offsetTop是相对于第一个position的值不是static的父元素确定的)
+			function getElementTop (element) {
+				var actualTop = element.offsetTop;
+				console.log('actualTop：' + actualTop);
+				var current = element.offsetParent;
+				while (current !== null) {
+					actualTop += current.offsetTop;
+					console.log(current);
+					console.log(current.offsetTop);
+					current = current.offsetParent;
+				}
+				return actualTop;
+			}
+
+			console.log(testElePosi);
+		};
+	</script>
+</head>
+<body>
+	<div class="div0"></div>
+	<div class="div1">
+		<div class="div2">
+			<div id="testEle"></div>
+		</div>
+	</div>
+</body>
+</html>
