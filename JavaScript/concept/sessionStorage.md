@@ -1,4 +1,6 @@
-`sessionStorage`，H5新增特性，当浏览器当前tab关闭（极端情况是浏览器直接关闭），`sessionStorage`自动清除（会话结束）。是比较`localStorage`没有过期时间。   
+`sessionStorage`，H5新增特性，当浏览器当前tab关闭（极端情况是浏览器直接关闭），`sessionStorage`自动清除（会话结束）。试比较`localStorage`没有过期时间。
+
+另外，不用tab间的`sessionStorage`不能共享。   
 
 ## 有什么用
 
