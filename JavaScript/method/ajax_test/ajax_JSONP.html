@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>JSONP ajax_JSONP</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script>
+		window.onload = function () {
+			function apiCall(apiURL) {
+				ajax_JSONP();
+
+				function ajax_JSONP() {
+					$.ajax({
+						url: apiURL,
+						dataType: "jsonp",
+						success: displayJSON,
+						error: function (data) {
+							console.log(data.status);
+						}
+					});
+
+					$("#method-used").text("$.ajax");
+				}
+			}
+
+			function displayJSON(data) {
+				document.getElementById("json-data").innerHTML = JSON.stringify(data, null, 2);
+			}
+
+			apiCall("https://api.douban.com/v2/movie/subject/26260853");
+		};
+	</script>
+	<style>
+		body {
+			font-family: sans-serif;
+			font-size: 16px;
+			text-align: center;
+		}
+
+		#json-data {
+			background-color: #222;
+			color: #eee;
+			display: inline-block;
+			font-size: 14px;
+			padding: 2em;
+			text-align: left;
+		}
+	</style>
+</head>
+<body>
+	<h2 id="method-used"></h2>
+	<pre id="json-data">Loading . . .</pre>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>async callback</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<script>
+	window.onload = function () {
+		// this is callback fn
+		var callback = function () {
+			console.log(222);
+		};
+
+		// do something in f1
+		var f1 = function (cb) {
+			$.ajax({
+				url: 'https://api.douban.com/v2/movie/subject/26260853',
+				dataType: 'jsonp',
+				success: displayJSON,
+				error: function () {
+					console.log('出错了');
+				}
+			});
+			console.log(111);
+
+			// call a function
+			cb();
+		};
+		f1(callback);
+		function displayJSON(data) {
+			document.getElementById("json-data").innerHTML = JSON.stringify(data, null, 2);
+			movieTitle = data.title;
+		}
+
+		$("#method-used").text("$.ajax");
+		console.log(333);
+	};
+</script>
+<style>
+	body {
+		font-family: sans-serif;
+		font-size: 16px;
+		text-align: center;
+	}
+
+	#json-data {
+		background-color: #222;
+		color: #eee;
+		display: inline-block;
+		font-size: 14px;
+		padding: 2em;
+		text-align: left;
+	}
+</style>
+</head>
+<body>
+	<h2 id="method-used"></h2>
+	<pre id="json-data">Loading . . .</pre>
+</body>
+</html>
