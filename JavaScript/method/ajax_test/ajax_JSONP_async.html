@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>JSONP ajax_JSONP</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script>
+		window.onload = function () {
+			var movieTitle = '';
+			$.ajax({
+				url: '1.txt',
+				async: false,
+				dataType: json,
+				success: displayJSON,
+				error: function () {
+					console.log('出错了');
+				}
+			});
+			// $.ajax({
+			// 	url: "https://api.douban.com/v2/movie/subject/26260853",
+			// 	dataType: "jsonp",
+			// 	// async: false, // 同步请求不能直接使用jsonp
+			// 	success: displayJSON,
+			// 	error: function (data) {
+			// 		console.log(data.status)
+			// 	}
+			// });
+			console.log("异步？");
+			function displayJSON(data) {
+				console.log(111);
+				document.getElementById("json-data").innerHTML = JSON.stringify(data, null, 2);
+				movieTitle = data.title;
+			}
+			
+			$("#method-used").text("$.ajax");
+			console.log(movieTitle);
+		};
+	</script>
+	<style>
+		body {
+			font-family: sans-serif;
+			font-size: 16px;
+			text-align: center;
+		}
+
+		#json-data {
+			background-color: #222;
+			color: #eee;
+			display: inline-block;
+			font-size: 14px;
+			padding: 2em;
+			text-align: left;
+		}
+	</style>
+</head>
+<body>
+	<h2 id="method-used"></h2>
+	<pre id="json-data">Loading . . .</pre>
+</body>
+</html>
