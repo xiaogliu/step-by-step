@@ -1,3 +1,1 @@
-今天才算正式入门webpack，太强大。周末总结webpack使用的blog。
-
-test
+今天才算正式入门webpack，太强大。总结webpack使用方法。
