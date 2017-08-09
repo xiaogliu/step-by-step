@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Event Object</title>
+	<style>
+		li {
+			cursor: pointer;
+		}
+		.active {
+			background-color: yellow;
+		}
+	</style>
+</head>
+<body>
+	<ul>
+		<li class="active" onclick="clickLi(event)">111</li>
+		<li onclick="clickLi(event)">222</li>
+		<li onclick="clickLi(event)">333</li>
+	</ul>
+	<script>
+		// 添加onload函数undefined？？？？
+		// window.onload = function () {
+			function clickLi (ev) {
+
+				// 删除初始active class
+				var getLi = document.querySelector('.active');
+				getLi.classList.remove('active');
+
+				// 通过事件对象给当前点击的元素添加class
+				console.log(ev.target);
+				ev.target.classList.toggle('active');
+				// console.log(this); // 这里的this是window，怎么让它是当前点击的li？
+			} 
+		// }
+	</script>
+</body>
+</html>
