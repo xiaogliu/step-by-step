@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head class="active">
 	<meta charset="UTF-8">
 	<title>Event Object</title>
 	<style>
@@ -14,7 +14,7 @@
 </head>
 <body>
 	<ul>
-		<li class="active" onclick="clickLi(event)">111</li>
+		<li class="active" onclick="clickLi(event)">111 <span></span></li>
 		<li onclick="clickLi(event)">222</li>
 		<li onclick="clickLi(event)">333</li>
 	</ul>
@@ -24,8 +24,10 @@
 			function clickLi (ev) {
 
 				// 删除初始active class
-				var getLi = document.querySelector('.active');
+				// var getLi = document.querySelector('.active');
+				var getLi = document.body.querySelector('.active');
 				getLi.classList.remove('active');
+				// console.log(getLi);
 
 				// 通过事件对象给当前点击的元素添加class
 				console.log(ev.target);
