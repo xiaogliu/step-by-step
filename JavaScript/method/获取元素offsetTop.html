@@ -1,67 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>offsetTop</title>
-	<style>
-		body {
-			margin: 0;
-		}
-		.div0 {
-			position: relative;
-			width: 100px;
-			height: 300px;
-			background-color: pink;
-		}
-		.div1 {
-			position: relative;
-			padding-top: 10px;
-			width: 100px;
-			height: 600px;
-			background-color: red;
-		}
-		.div2 {
-			position: relative;
-			padding-top: 10px;
-			width: 100px;
-			height: 300px;
-			background-color: green;
-		}
-		#testEle {
-			width: 100px;
-			height: 10px;
-			background-color: yellow;
-		}
-	</style>
-	<script>
-		window.onload = function () {
-			var testEle = document.getElementById('testEle');
-			var testElePosi = getElementTop(testEle);
+  <meta charset="UTF-8">
+  <title>offsetTop</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      margin: 0;
+    }
+    .div0 {
+      position: relative;
+      width: 900px;
+      height: 300px;
+      background-color: pink;
+    }
+    .div1 {
+      position: static;
+      padding-top: 10px;
+      width: 900px;
+      height: 600px;
+      background-color: red;
+    }
+    .div2 {
+      position: relative;
+      padding-top: 10px;
+      width: 900px;
+      height: 300px;
+      background-color: green;
+    }
+    #testEle {
+      width: 900px;
+      height: 60px;
+      background-color: yellow;
+    }
+  </style>
+  <script>
+    window.onload = function () {
+      var testEle = document.getElementById('testEle');
+      var testElePosi = getElementTop(testEle);
 
-			// 获取元素offsetTop(元素的offsetTop是相对于第一个position的值不是static的父元素确定的)
-			function getElementTop (element) {
-				var actualTop = element.offsetTop;
-				console.log('actualTop：' + actualTop);
-				var current = element.offsetParent;
-				while (current !== null) {
-					actualTop += current.offsetTop;
-					console.log(current);
-					console.log(current.offsetTop);
-					current = current.offsetParent;
-				}
-				return actualTop;
-			}
+      // 获取元素offsetTop(元素的offsetTop是相对于第一个position的值不是static的父元素确定的)
+      function getElementTop (element) {
+        var actualTop = element.offsetTop;
+        console.log('actualTop：' + actualTop);
+        var current = element.offsetParent;
+        while (current !== null) {
+          actualTop += current.offsetTop;
+          console.log(current);
+          console.log(current.offsetTop);
+          current = current.offsetParent;
+        }
+        return 'testEle距浏览器顶部高度：' + actualTop + 'px';
+      }
 
-			console.log(testElePosi);
-		};
-	</script>
+      console.log(testElePosi);
+    };
+  </script>
 </head>
 <body>
-	<div class="div0"></div>
-	<div class="div1">
-		<div class="div2">
-			<div id="testEle"></div>
-		</div>
-	</div>
+  <div class="div0">
+    <p>div0</p>
+    <p>无法直接获取一个元素距离浏览器顶部的距离，但可以通过元素offsetTop属性间接获取。</p>
+    <p>元素的offsetTop是相对于他的offsetParent（元素的offsetParent指的是包含该元素的第一个position属性不是static的元素）而言的，所以只要将元素的offsetTop和其offsetParent的offsetTop相加，就可得到元素距离浏览器顶部的高度值。</p>
+    <p>这里需要注意的是，元素的offsetParent可能还有offsetParent，所以要做下循环，直至根元素。</p>
+  </div>
+  <div class="div1">
+    <p>div1：div1的position属性是static，所以不是testEle的offsetParent</p>
+    <div class="div2">
+      <p>div2</p>
+      <div id="testEle">
+        <p>testEle</p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
