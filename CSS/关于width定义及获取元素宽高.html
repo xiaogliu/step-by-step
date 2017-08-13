@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>关于width定义及获取元素宽高</title>
+</head>
+<style>
+	html, body, div, p {
+		position: relative;
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	.main {
+		width: 900px;
+		margin: 0 auto;
+		padding: 20px;
+		background-color: #efefef;
+	}
+	.box-model {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		padding: 20px;
+		background-color: yellow;
+	}
+	.b-margin {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 600px;
+		height: 600px;
+		background-color: #0ff;
+	}
+	.b-margin p {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	.b-border {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 500px;
+		height: 500px;
+		background-color: #0dd;
+	}
+	.b-padding {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 450px;
+		height: 450px;
+		background-color: #0bb;
+	}
+	.b-content {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 350px;
+		height: 350px;
+		background-color: #099;
+	}
+	.content-box {
+		width: 100%;
+		background-color: yellow;
+	}
+	.content-main {
+		box-sizing: content-box;
+		width: 600px;
+		height: 300px;
+		margin: 0 auto;
+		background-color: #0ff;
+	}
+	.content-sub {
+		box-sizing: content-box;
+		width: 100%;
+		height: 200px;
+		padding: 20px;
+		border: 10px solid red;
+		background-color: #099;
+	}
+	.border-box {
+		width: 100%;
+		background-color: yellow;
+	}
+	.border-main {
+		width: 600px;
+		height: 300px;
+		margin: 0 auto;
+		background-color: #0ff;
+	}
+	.border-sub {
+		width: 100%;
+		height: 200px;
+		padding: 20px;
+		border: 10px solid red;
+		background-color: #099;
+	}
+	.get-width {
+		width: 100%;
+	}
+</style>
+<script>
+	window.onload = function () {
+		var borderSub = document.querySelector('.border-sub');
+		console.log(borderSub.clientWidth);
+	}
+</script>
+<body>
+	<div class="main">
+		<div class="info">
+			CSS中关于`width`的定义不是一成不变的，可以通过`box-sizing`改变。如果`box-sizing: content-box`则，设置的`width`的值为`content width`（关于什么是`content width`请看CSS盒模型定义），盒子的最终宽度会在已设置的`width`的基础上加上`padding width` + `border width`；如果`box-sizing: border-box`则，设置的`width`的值是就是盒子的宽度。
+		</div>
+		<hr>
+		<div class="box-model">
+			<h2>CSS盒子模型：</h2>
+			<div class="b-margin">
+				<p>margin</p>
+				<div class="b-border">
+					<p>border</p>
+					<div class="b-padding">
+						<p>padding</p>
+						<div class="b-content">
+							<p>content</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="content-box">
+			<h2>content-box</h2>
+			`content-box`的问题：如果在响应式设计中，可能出现非预期情况，比如，设置子元素宽度为100%，如果同时再给子元素设置`padding`或者`border`则子元素的宽度可能会大于父元素宽度，给布局造成困扰。
+			<div class="content-main">
+				我的`box-sizing`值为`content-box`,宽度为`600px`
+				<div class="content-sub">
+					我的`box-sizing`值为`content-box`,宽度为`100%`，同时，我的`padding: 20px; border: 10px solid red`, 我的实际宽度为`660px = padding-left-width + border-left-width + content-width（600px） + border-right-width + padding-right-width`
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="border-box">
+			<h2>border-box</h2>
+			`border-box`的设置的宽度就是盒子的宽度，如果盒子又有`padding或者border`，则，响应的`content width`会被压缩。`border-box`的问题在于，如果数值设置不当，可能导致文字内容溢出。
+			<div class="border-main">
+				我的`box-sizing`值为`border-box`,宽度为`600px`
+				<div class="border-sub">
+					我的`box-sizing`值为`border-box`,宽度为`100%`，同时，我的`padding: 20px; border: 10px solid red`, 我的实际宽度为`660px = padding-left-width + border-left-width + content-width + border-right-width + padding-right-width`
+				</div>
+			</div>
+			<h3>值得注意的是，从Bootstrap 3.0开始，他们统一使用`border-box`模型：http://blog.getbootstrap.com/2013/08/19/bootstrap-3-released/。</h3>
+		</div>
+		<hr>
+		<div class="get-width b-margin">
+			<h2>获取元素宽高：offsetWidth</h2>
+			<p>`offsetWidth`包括`content width` + `padding width` + `border-width` + 滚动条</p>
+			<div class="b-border">
+				<p>border</p>
+				<div class="b-padding">
+					<p>padding</p>
+					<div class="b-content">
+						<p>content</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="get-width b-margin">
+			<h2>获取元素宽高：clientWidth</h2>
+			<p>`clientWidth`包括`content width` + `padding width`</p>
+			<div class="b-padding">
+				<p>padding</p>
+				<div class="b-content">
+					<p>content</p>
+				</div>
+			</div>
+		</div>
+		<h3>借助`document.documentElement.offsetWidth/document.documentElement.offsetWidth`可以获取当前浏览器窗口宽高，在需要满屏设计中经常用到</h3>
+	</div>
+</body>
+</html>
