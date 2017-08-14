@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" id="html">
+<head>
+	<meta charset="UTF-8">
+	<title>Event Object</title>
+	<style>
+		#div {
+			width: 500px;
+			background-color: #0ff;
+		}
+		body {
+			width: 600px;
+			height: 500px;
+			background-color: #099;
+		}
+		html {
+			background-color: yellow;
+		}
+	</style>
+</head>
+<body id="body">
+	<div id="div">
+		<p>事件冒泡：事件由最具体的元素接收，然后逐级向上传播到较为不具体的元素。<br>这里注意一点是逐级传递，即便给`window`加的事件在`document`之前，但因为`window`是更为不具体的元素，所以`window`点击事件发生在`document`之后。<br>可以通过`event.stopPropagation()`来阻止事件冒泡。</p>
+		<button id="btn">click me</button>
+	</div>
+	<script>
+		var btn = document.getElementById('btn');
+		var div = document.getElementById('div');
+		var body = document.getElementById('body');
+		var html = document.getElementById('html');
+		btn.addEventListener('click', function (ev) {
+			console.log('btn的事件');
+			// ev.stopPropagation(); // 阻止冒泡
+		});
+		div.addEventListener('click', function (ev) {
+			console.log('div的事件（btn直接父元素）');
+			// ev.stopPropagation(); // 阻止冒泡
+		});
+		body.addEventListener('click', function () {
+			console.log('body的事件');
+		});
+		html.addEventListener('click', function () {
+			console.log('html的事件');
+		});
+		window.addEventListener('click', function () {
+			console.log('window的事件');
+		});
+		document.addEventListener('click', function () {
+			console.log('document的事件');
+		});
+	</script>
+</body>
+</html>
