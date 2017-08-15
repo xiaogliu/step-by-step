@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>书签图标</title>
+	<style>
+		.bookmark {
+			position: relative;
+			width: 20px;
+			height: 38px;
+			background-color: #e94d4e;
+			box-shadow: 1px 1px 7px #e94d4e;
+		}
+		.bookmark::before, .bookmark::after {
+			content: "";
+			position: absolute;
+			bottom: -10px;
+			width: 0;
+			height: 0;
+			border-bottom: 5px solid transparent;
+			border-top: 5px solid #e94d4e;
+		}
+		.bookmark::before {
+			border-right: 5px solid transparent;
+			border-left: 5px solid #e94d4e;
+		}
+		.bookmark::after {
+			left: 10px;
+			border-right: 5px solid #e94d4e;
+			border-left: 5px solid transparent;
+		}
+		.bookmark i {
+			position: absolute;
+			right: -6px;
+			width: 0;
+			height: 0;
+			border-top: 3px solid transparent;
+			border-right: 3px solid transparent;
+			border-bottom: 3px solid #e94d4e;
+			border-left: 3px solid #e94d4e;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<p class="bookmark"><i></i></p>
+	</div>
+</body>
+</html>
