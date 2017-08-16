@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" id="html">
+<head>
+  <meta charset="UTF-8">
+  <title>Event Object</title>
+  <style>
+    #div {
+      width: 500px;
+      background-color: #0ff;
+    }
+    body {
+      width: 600px;
+      height: 500px;
+      background-color: #099;
+    }
+    html {
+      background-color: yellow;
+    }
+  </style>
+</head>
+<body id="body">
+  <div id="div">
+    <p>事件委托</p>
+    <button id="btn">click me</button>
+  </div>
+  <script>
+    // 定义跨浏览器事件对象
+    var EventUtil = {
+      addHandler: function(element, type, handler){
+        if (element.addEventListener){
+          element.addEventListener(type, handler, false);
+        } else if (element.attachEvent){
+          element.attachEvent("on" + type, handler);
+        } else {
+          element["on" + type] = handler;
+        }
+      },
+      getEvent: function(event){
+        return event ? event : window.event;
+      },
+      getTarget: function(event){
+        return event.target || event.srcElement;
+      },
+      preventDefault: function(event){
+        if (event.preventDefault){
+          event.preventDefault();
+        } else {
+          event.returnValue = false;
+        }
+      },
+      removeHandler: function(element, type, handler){
+        if (element.removeEventListener){
+          element.removeEventListener(type, handler, false);
+        } else if (element.detachEvent){
+          element.detachEvent("on" + type, handler);
+        } else {
+          element["on" + type] = null;
+        }
+      },
+      stopPropagation: function(event){
+        if (event.stopPropagation){
+          event.stopPropagation();
+        } else {
+          event.cancelBubble = true;
+        }
+      }
+    };
+
+    // 事件委托
+    EventUtil.addHandler(document, 'click', function (event) {
+      event = EventUtil.getEvent(event);
+      var target = EventUtil.getTarget(event);
+
+      switch (target.id) {
+        // 跟定义的顺序没关系，因为冒泡总是从嵌套最深的元素开始
+        // case 'div':
+        //   console.log('div clicked');
+        //   break;
+        case 'btn':
+          console.log('btn clicked');
+          break;
+        case 'div':
+          console.log('div clicked');
+          break;
+        case 'body':
+          console.log('body clicked');
+          break;
+        case 'html':
+          console.log('html clicked');
+          break;
+      }
+    });
+  </script>
+</body>
+</html>
