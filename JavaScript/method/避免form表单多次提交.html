@@ -1,0 +1,65 @@
+<!DOCTYPE>
+<html>
+<head> 
+  <meta charset="utf-8"> 
+  <title>避免form表单多次提交</title> 
+</head>
+<body>
+  <form action="www.baidu.com" id="form1" target="_blank">
+    First name: <input type="text" name="fname"><br>
+    <button type="submit" id="btn">submit</button>
+  </form>
+  <script>
+    window.onload = function () {
+      var EventUtil = {
+        addHandler: function(element, type, handler){
+          if (element.addEventListener){
+            element.addEventListener(type, handler, false);
+          } else if (element.attachEvent){
+            element.attachEvent("on" + type, handler);
+          } else {
+            element["on" + type] = handler;
+          }
+        },
+        getEvent: function(event){
+          return event ? event : window.event;
+        },
+        getTarget: function(event){
+          return event.target || event.srcElement;
+        },
+        preventDefault: function(event){
+          if (event.preventDefault){
+            event.preventDefault();
+          } else {
+            event.returnValue = false;
+          }
+        },
+        removeHandler: function(element, type, handler){
+          if (element.removeEventListener){
+            element.removeEventListener(type, handler, false);
+          } else if (element.detachEvent){
+            element.detachEvent("on" + type, handler);
+          } else {
+            element["on" + type] = null;
+          }
+        },
+        stopPropagation: function(event){
+          if (event.stopPropagation){
+            event.stopPropagation();
+          } else {
+            event.cancelBubble = true;
+          }
+        }
+      };
+      //避免多次提交表单
+      var form = document.getElementById('form1');
+      EventUtil.addHandler(form, "submit", function(event){
+        //取得提交按钮
+        var btn = document.getElementById('btn');
+        //禁用它
+        btn.disabled = true;
+      });
+    }
+  </script>
+</body>
+</html>
