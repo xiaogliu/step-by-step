@@ -54,10 +54,17 @@
       //避免多次提交表单
       var form = document.getElementById('form1');
       EventUtil.addHandler(form, "submit", function(event){
+
         //取得提交按钮
         var btn = document.getElementById('btn');
+
         //禁用它
         btn.disabled = true;
+
+        // 模拟接口返回数据后重新激活提交按钮
+        setTimeout(function () {
+          btn.disabled = false;
+        }, 5000);
       });
     }
   </script>
