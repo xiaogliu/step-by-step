@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>cal time</title>
+</head>
+<body>
+  <p>参见console</p>
+  <script>
+    var bubbleSort = function (arr) {
+      var len = arr.length;
+      for (var i = 0; i < len - 1; i++) {
+        for (var j = 0; j < len - 1 - i; j++) {
+          if (arr[j] > arr[j + 1]) {
+            var tem = arr[j];
+            arr[j] = arr[j + 1];
+            arr[j + 1] = tem;
+          }
+        }
+      }
+      return arr;
+    }
+
+    // 快排算法
+    var quickSort = function (arr) {
+      var len = arr.length;
+
+      if (len <= 1) {
+        return arr;
+      }
+      
+      var num = Math.floor(len / 2);
+      var middleValue = arr.splice(num, 1)[0];
+      var left = [], right = [];
+
+      for (var i = 0; i < len - 1; i++) {
+        if (arr[i] < middleValue) {
+          left.push(arr[i]);
+        } else {
+          right.push(arr[i]);
+        }
+      }
+      return quickSort(left).concat(middleValue, quickSort(right));
+    }
+    
+    // 生成随机数组
+    var randomArr = function (n, max) {
+      if (!max) {
+        max = 100;
+      }
+
+      var arr = [];
+      for (var i = 0; i < n; i++) {
+        arr.push(parseInt(Math.random() * max))
+      }
+
+      return arr;
+    }
+
+    // 快排需要时间
+    var startTimeQ = + new Date();
+    console.log('快排开始...');
+    quickSort(randomArr(5000, 5000));
+    var stopTimeQ = + new Date();
+    console.log('快排结束，5000个元素数组需要时间：' + (stopTimeQ - startTimeQ) + 'ms');
+
+    // 冒泡排序需要时间
+    var startTimeB = + new Date();
+    console.log('冒泡排序开始...');
+    bubbleSort(randomArr(5000, 5000));
+    var stopTimeB = + new Date();
+    console.log('冒泡排序结束，5000个元素数组需要时间：' + (stopTimeB - startTimeB) + 'ms');
+  </script>
+</body>
+</html>
