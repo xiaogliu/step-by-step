@@ -8,3 +8,5 @@
 2.`git rm --cached name_of_file`，将文件从repository中删除（如果文件已经push）
 
 实际，想我开头所说的需求，并不是将`conf.js`从仓库中删除，而是不想讲本地变化提交，用1就好。
+
+参考：https://stackoverflow.com/questions/4308610/how-to-ignore-certain-files-in-git
