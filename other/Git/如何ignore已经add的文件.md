@@ -9,4 +9,6 @@
 
 实际，想我开头所说的需求，并不是将`conf.js`从仓库中删除，而是不想讲本地变化提交，用1就好。
 
+> 将文件视为unchanged，**也是一种变化**，只是不会add，也就不会做提交操作。但如果切换分支的时候，记得把该文件回复原来状态，就是“不当做unchanged”，命令为`git update-index --no-assume-unchanged <path/to/file>`不然Git会认为有变化未提交而默认不给切换分支，除非使用`stash`命令。
+
 参考：https://stackoverflow.com/questions/4308610/how-to-ignore-certain-files-in-git
