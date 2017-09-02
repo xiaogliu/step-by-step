@@ -15,3 +15,5 @@ select table_name from information_schema.tables where table_schema='lsb-test'
 ```bash
 SELECT * FROM `user` WHERE phone='18565681300'
 ```
+
+- 还可以插入，删除，但并没有很智能
