@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>平行四边形</title>
+  <style>
+  #css3-parallelogram {
+    position: relative;
+    margin-left: 20px;
+    z-index: 99;
+  }
+  #css3-parallelogram::before {
+    /* position和content属性必须有，不然伪元素无法显示 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "";
+    width: 100px;
+    height: 50px;
+    background: #232323;
+    -webkit-transform: skew(-45deg);
+    -moz-transform: skew(-45deg);
+    -o-transform: skew(-45deg);
+    transform: skew(-45deg);
+    border-radius: 5px;
+  }
+  /* after会在before图层之上，用index无效 */
+  #css3-parallelogram::after {
+    position: absolute;
+    left: 20px;
+    content: "测试测试测试测试";
+    color: #fff;
+  }
+  </style>
+</head>
+<body>
+  <div id="css3-parallelogram"></div>
+</body>
+</html>
