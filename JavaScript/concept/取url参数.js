@@ -10,3 +10,6 @@ getUrlPar (name) {
   }
   return '';
 }
+
+
+// url参数格式：?key1=value1&key2=value2
