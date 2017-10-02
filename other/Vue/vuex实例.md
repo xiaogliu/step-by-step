@@ -23,6 +23,7 @@ export const mutations = {
   }
 };
 ```
+`$store`可以认为是 **注册在根组件上的一个属性**，在应用中的各个组件的js中可以通过 `this.$store`进行访问，而在模板中也可以直接通过 `$store`进行访问。
 
 ```html
 <!-- html模版中使用：获取状态 -->
