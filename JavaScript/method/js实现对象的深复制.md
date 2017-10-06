@@ -49,7 +49,9 @@ let a = {m: 1}
 let b = Object({}, a); // b = {m: 1}此时为深复制
 ```
 
-- JSON方法
+> 这里需要注意的是，如果a里面包含嵌套的对象，复制的还是引用
+
+- JSON方法（ES6以下也支持）
 
 ```js
 let newObj = JSON.parse(JSON.stringify(oldObj));
