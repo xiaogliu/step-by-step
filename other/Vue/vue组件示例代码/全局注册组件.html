@@ -6,21 +6,21 @@
 </head>
 <body>
   <div id="app">
-    <p>注册局部组件</p>
+    <p>注册全局组件</p>
     <my-component></my-component>
   </div>
 
   <script>
-    const childComponent = {
+    // 确保在初始化根实例之前注册组件（模块化开发则是在初始化根实例之前引入组件）
+    Vue.component('my-component', {
       template: '<div>A comstom component</div>',
-    };
+    });
+
+    // 初始化根实例
     new Vue({
       el: '#app',
       data: {
       },
-      components: {
-        'my-component': childComponent,
-      }
     })
   </script>
 </body>
