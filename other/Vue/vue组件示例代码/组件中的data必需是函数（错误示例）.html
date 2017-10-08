@@ -13,24 +13,22 @@
   </div>
 
   <script>
-    const childComponent = {
-      template: '<button @click="counter += 1">{{ counter }}</button>',
+  const childComponent = {
+    template: '<button @click="counter += 1">{{ counter }}</button>',
 
-      // 此时每个组件中的data对象单独返回，都是独立的
-      data: function () {
-        return {
-          counter: 0,
-        }
-      },
-    };
-    new Vue({
-      el: '#app',
-      data: {
-      },
-      components: {
-        'my-component': childComponent,
-      }
-    })
+    // data不是函数，报错
+    data: {
+      counter: 0,
+    },
+  };
+  new Vue({
+    el: '#app',
+    data: {
+    },
+    components: {
+      'my-component': childComponent,
+    }
+  })
   </script>
 </body>
 </html>
