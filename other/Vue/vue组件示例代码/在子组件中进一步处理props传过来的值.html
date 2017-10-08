@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to Vue</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    <p>vue组件</p>
+    <my-component message="Hello~"></my-component>
+  </div>
+
+  <script>
+    const childComponent = {
+      props: ['message'],
+      data: function () {
+        return {
+          localMsg: this.message + 'World',
+        }
+      },
+      computed: {
+        processMsg: function () {
+          return this.message.toLowerCase();
+        }
+      },
+      template: '<div>这是从父组件传过来的数据：{{ message }} <p>这是使用父组件传过来的数据重新赋值后的数据：{{ localMsg }}</p> <p>这是使用父组件传过来的数据重新赋值后的数据：{{ processMsg }}</p></div>',
+    };
+    new Vue({
+      el: '#app',
+      data: {
+      },
+      components: {
+        'my-component': childComponent,
+      }
+    })
+  </script>
+</body>
+</html>
