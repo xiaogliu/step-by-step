@@ -7,7 +7,8 @@
 <body>
   <div id="app">
     <p>vue组件</p>
-    <my-component message="Hello~"></my-component>
+    <input type="text" placeholder="来自父组件的动态数据" v-model="parentMsg">
+    <my-component :message="parentMsg"></my-component>
   </div>
 
   <script>
@@ -18,6 +19,7 @@
     new Vue({
       el: '#app',
       data: {
+        parentMsg: '',
       },
       components: {
         'my-component': childComponent,
