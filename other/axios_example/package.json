@@ -1,0 +1,16 @@
+{
+  "name": "axios_example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "using_cdn.html",
+  "dependencies": {
+    "http-server": "^0.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "http-server -a 127.0.0.1 -p 7070"
+  },
+  "author": "liuxiaoguang",
+  "license": "MIT"
+}
