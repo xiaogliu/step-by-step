@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <p>cors</p>
+  <script>
+  const xhr = new XMLHttpRequest();
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+        console.log(xhr.responseText);
+      } else {
+        console.log("Error" + xhr.status);
+      }
+    }
+  };
+  // 需要加协议，不然报错Failed to execute ‘open’ on ‘XMLHttpRequest’ : invalid URL
+  xhr.open('get', 'http://127.0.0.1:3030/', true);
+  xhr.send(null);
+  </script>
+</body>
+</html>
