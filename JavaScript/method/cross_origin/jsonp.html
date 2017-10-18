@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <p>using origin js</p>
+  <script>
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+
+    // 传参并指定回调执行函数为onBack
+    script.src = 'https://api.douban.com/v2/book/6548683?callback=onBack';
+    document.head.appendChild(script);
+
+    // 回调执行函数
+    function onBack(res) {
+      console.log(res);
+    }
+  </script>
+</body>
+</html>
