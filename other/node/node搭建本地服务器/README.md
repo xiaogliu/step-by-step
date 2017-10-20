@@ -30,3 +30,5 @@ npm run dev
 
 > 如果你的当前项目中存在 `public` 文件夹,那么默认静态目录会指定到 `public`
 如果没有 `public` 文件夹,那么静态目录就是 根目录 `./`
+
+参考资料： [http-server 快速创建node.js 静态服务器](http://yijiebuyi.com/blog/b0f6ddc56be457e13879a3ad105f561b.html)
