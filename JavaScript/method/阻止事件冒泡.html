@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="event-dom2-div">
+    <p>这里是DOM2级事件，可以在事件捕获阶段触发事件。</p>
+    <button class="event-dom2-btn">click me</button>
+  </div>
+  <script>
+    const dom2Div = document.querySelector('.event-dom2-div');
+    const dom2Btn = document.querySelector('.event-dom2-btn');
+
+    // 在冒泡阶段触发事件，不能执行，因为取消事件冒泡了
+    dom2Div.addEventListener('click', function (event) {
+      console.log('dom2:div，冒泡');
+      console.log(event.eventPhase);
+    }, false)
+
+    // 在处于目标阶段触发事件
+    dom2Btn.addEventListener('click', function (event) {
+      console.log('dom2:btn，处于目标阶段');
+      console.log(event.eventPhase);
+      event.cancelBubble = true;
+    })
+
+    // 捕获阶段触发事件，能执行
+    dom2Div.addEventListener('click', function (event) {
+      console.log('dom2:div，捕获');
+      console.log(event.eventPhase);
+    }, true)
+  </script>
+</body>
+</html>

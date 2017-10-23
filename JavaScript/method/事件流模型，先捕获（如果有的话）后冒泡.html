@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="event-dom2-div">
+    <p>这里是DOM2级事件，可以在事件捕获阶段触发事件。</p>
+    <button class="event-dom2-btn">click me</button>
+  </div>
+  <script>
+    const dom2Div = document.querySelector('.event-dom2-div');
+    const dom2Btn = document.querySelector('.event-dom2-btn');
+
+    // 在冒泡阶段触发事件（虽然代码写在捕获阶段之前，但执行捕获阶段的事件）
+    dom2Div.addEventListener('click', function (event) {
+      console.log('dom2:div，冒泡');
+      console.log(event.eventPhase);
+    }, false)
+
+    // 在处于目标阶段触发事件，到底先执行捕获阶段还是冒泡阶段的代码，看谁先注册，先注册的先执行
+    dom2Btn.addEventListener('click', function (event) {
+      console.log('dom2:btn，冒泡');
+      console.log(event.eventPhase);
+    }, false)
+
+    // 捕获阶段触发事件，先执行
+    dom2Div.addEventListener('click', function (event) {
+      console.log('dom2:div，捕获');
+      console.log(event.eventPhase);
+    }, true)
+
+    // 在处于目标阶段触发事件，到底先执行捕获阶段还是冒泡阶段的代码，看谁先注册，先注册的先执行
+    dom2Btn.addEventListener('click', function (event) {
+      console.log('dom2:btn，捕获');
+      console.log(event.eventPhase);
+    }, true)
+  </script>
+</body>
+</html>
