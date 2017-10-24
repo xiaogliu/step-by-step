@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <p id="testBind">test bind() method</p>
+  <p>more info:https://stackoverflow.com/questions/1007340/javascript-function-aliasing-doesnt-seem-to-work</p>
+  <script>
+    // console.log(document.getElementById);
+    // console.log(document);
+
+    /**
+     * 如果document.getElementById中使用了this，在调用document.getElementById时，this指向document；
+     * 当直接把document.getElementById的引用赋值给getId后，调用getId的时候，this指向了window，报错
+     * 解决办法有两种：
+     * 1. 彻底解决，在赋值给getId时，将对应的执行环境通过bind()函数，也复制过去
+     * 2. 每次调用时通过apply或者call，指定函数执行环境
+     */
+
+    // 未绑定执行环境，后续要每次显示指定
+    const getId = document.getElementById;
+
+    // 已绑定执行环境，后续直接调用
+    const getId3 = document.getElementById.bind(document);
+
+    // 使用apply时，传参必须为数组，即便只有一个参数，这个时候用call显然更合适
+    const testBind = getId.apply(document, ['testBind']);
+    const testBind2 = getId.call(document, 'testBind');
+
+
+    const testBind3 = getId3('testBind');
+
+    console.log(testBind, testBind2, testBind3);
+  </script>
+</body>
+</html>
