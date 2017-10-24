@@ -29,12 +29,17 @@
 
     // 使用apply时，传参必须为数组，即便只有一个参数，这个时候用call显然更合适
     const testBind = getId.apply(document, ['testBind']);
-    const testBind2 = getId.call(document, 'testBind');
 
+    // apply第二个参数也可以直接传arguments类数组进去
+    const testBind1 = (function (id) {
+      return getId.apply(document, arguments);
+    })('testBind');
+
+    const testBind2 = getId.call(document, 'testBind');
 
     const testBind3 = getId3('testBind');
 
-    console.log(testBind, testBind2, testBind3);
+    console.log(testBind, testBind1, testBind2, testBind3);
   </script>
 </body>
 </html>
