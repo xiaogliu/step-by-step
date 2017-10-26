@@ -26,3 +26,5 @@ vm.aPlus; // 2
 vm.aPlus(2); // 4
 vm.aDouble; // 8
 ```
+
+> 注意，计算属性的属性值默认值虽然写成 function 形式，但其本身并不是函数，如果这样用报错 `vm.aDouble()`
