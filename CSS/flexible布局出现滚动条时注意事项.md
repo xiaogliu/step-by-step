@@ -49,3 +49,5 @@
 </body>
 </html>
 ```
+
+> 有个问题：为什么不管是 flex layout 还是非 flex layout，在 viewport 的宽度小于子元素宽度时，子元素为什么没有把父元素撑起来？？
