@@ -20,15 +20,14 @@
   </div>
   <script>
   /**
-  * [myCanvas description]
-  * 烂代码 v1，我最开始想到的2017-11-09
-  * a. 完全是思路到哪，代码写到哪，没有整体规划；
-  * b. 不仅仅是从上写到下，并且是最容易想到的思路去实现，如果没有经过大量训练，最先想到的往往是效率最低的
-  * c. 此处的烂除了没封装，更烂的是还需要清除多个定时器！
-  */
+   * [myCanvas description]
+   * 烂代码 v1，我最开始想到的2017-11-09
+   * a. 将移动方向和移动速度解耦
+   * b. 居然改变方向也不能停顿一下了？奇怪，setInterval细看
+   */
   const myCanvas = document.querySelector('#drawing');
   const ctx = myCanvas.getContext('2d');
-  let [x, y, jump, delay] = [100, 300, 5, 1000/60];
+  let [x, y, speed, delay] = [100, 300, 5, 1000/60];
 
   const img = new Image();
   img.src = '1_board.png';
@@ -38,36 +37,36 @@
     ctx.drawImage(img, x, y);
   }
 
-  /**
-  * 这部分耦合严重：移动方向和刷新图像（setInterval）都放在了一起
-  * 并且方向切换的时候会有停顿？？
-  */
-
-  // 存储定时器的变量，便于后续清除
-  let timer = null;
+  let [goLeft, goRight] = [false, false];
 
   window.addEventListener('keydown', function () {
     // a'keycode is 65, d'keyCode is 68; 不使用key是因为key区分大小写
     if (event.keyCode === 65) {
-      clearInterval(timer);
-      timer = setInterval(function () {
-        x -= jump;
-        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-        ctx.drawImage(img, x, y);
-      }, delay)
+      goLeft = true;
     } else if (event.keyCode === 68) {
-      clearInterval(timer);
-      timer = setInterval(function () {
-        x += jump;
-        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-        ctx.drawImage(img, x, y);
-      }, delay)
+      goRight = true;
     }
   });
 
   window.addEventListener('keyup', function () {
-    clearInterval(timer);
+    if (event.keyCode === 65) {
+      goLeft = false;
+    } else if (event.keyCode === 68) {
+      goRight = false;
+    }
   });
+
+  setInterval(function () {
+    if (goLeft) {
+      x -= 5;
+    } else if (goRight) {
+      x += 5;
+    }
+
+    // refresh
+    ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+    ctx.drawImage(img, x, y);
+  }, delay);
   </script>
 </body>
 </html>
