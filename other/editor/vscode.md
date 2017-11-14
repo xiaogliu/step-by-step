@@ -1,0 +1,1 @@
+列选择： cmd + shift + 鼠标左键；cmd + alt + 上／下箭头
