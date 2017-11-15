@@ -132,3 +132,63 @@ export default {
 ```
 
 > 可以通过给 slot 元素设置 `name` 属性，这样在子元素中就可设置多个 slot，这样父元素分发内容时会更有针对性。但通过具名 slot 能实现的效果，通过单个 slot 都可以实现，并且具名插槽在可维护性上并没有绝对优势，如何选择看个人喜好了。（小白见解，随着项目经验积累或许会有更深的认识）
+
+# 子组件传递信息到父组件
+
+子组件往父组件传递信息是通过自定义事件完成的：**子组件每次执行发送（emit）自定义事件的代码，就相应的在父组件中触发了该自定义事件，这也就实现了父组件向子组件传递信息的目的。信息传递过来后，即自定义事件，通过在父组件调用自定义事件的事件处理程序，父组件就可以根据子组件的变化而做相关操作了**。   
+
+下面是 Vue 
+
+```html
+<!-- 父组件 -->
+<template>
+  <div id="counter-event-example">
+    <p>{{ total }}</p>
+
+    <!-- increment是自定义事件，incrementTotal是在父组件中定义的事件处理程序 -->
+    <child-component @child-custom-event="parentIncrementTotal()"></child-component>
+    <child-component @child-custom-event="parentIncrementTotal()"></child-component>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      total: 0,
+    };
+  },
+  methods: {
+    // 父组件自定义事件处理程序，子组件每发送一次自定义事件，就被执行一次
+    parentIncrementTotal () {
+      this.total += 1;
+    }
+  }
+};
+</script>
+```
+
+```html
+<!-- 子组件 -->
+<template>
+  <button @click="incrementCounter()">{{ counter }}</button>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      counter: 0,
+    };
+  },
+  method: {
+    incrementCounter () {
+      this.counter += 1;
+
+      // 向父组件发送自定义事件或者说触发父组件的自定义事件
+      this.$emit('child-custom-event');
+    },
+  },
+};
+</script>
+```
