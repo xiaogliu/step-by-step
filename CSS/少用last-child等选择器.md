@@ -1,0 +1,1 @@
+如题，不用类似 `last-child` `first-child` 这类选择器，后期维护成本太高。
