@@ -8,5 +8,5 @@ See https://git.io/v5vcn for more information, either install watchman or run th
   sudo sysctl -w kern.maxfiles=5242880
   sudo sysctl -w kern.maxfilesperproc=524288
 ```
-
+  
 就像终端中提示的那样，解决方法有二：1，安装 watchman 2，执行下面两行命令（更改允许内核打开的最大文件数）
