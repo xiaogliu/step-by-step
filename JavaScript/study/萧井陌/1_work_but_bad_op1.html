@@ -27,7 +27,7 @@
    */
   const myCanvas = document.querySelector('#drawing');
   const ctx = myCanvas.getContext('2d');
-  let [x, y, speed, delay] = [100, 300, 5, 1000/60];
+  let [x, y, speed] = [100, 300, 5];
 
   const img = new Image();
   img.src = '1_board.png';
@@ -66,7 +66,7 @@
     // refresh
     ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
     ctx.drawImage(img, x, y);
-  }, delay);
+  }, 1000/60);
   </script>
 </body>
 </html>
