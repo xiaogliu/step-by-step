@@ -24,7 +24,8 @@
   <script>
     /**
      * [myCanvas description]
-     * 封装 setInterval
+     * 封装 事件
+     * 还有缺点：大小写区分，最好大小写都可以
      */
     const imageFromPath = function (path) {
       const img = new Image();
@@ -51,14 +52,41 @@
     }
 
     const GuaGame = function () {
-      let g = {};
+      let g = {
+        actions: {},
+        keydowns: {},
+      };
       const canvas = document.querySelector('#drawing');
       const context = canvas.getContext('2d');
 
       g.canvas = canvas;
       g.context = context;
 
+      // events
+      window.addEventListener('keydown', function (event) {
+        g.keydowns[event.key] = true;
+      });
+      window.addEventListener('keyup', function (event) {
+        g.keydowns[event.key] = false;
+      });
+
+      // register
+      g.registerAction = function (key, callback) {
+        g.actions[key] = callback;
+      };
+
+      // timer
       setInterval(function () {
+        // events
+        const actions = Object.keys(g.actions);
+        for (let i = 0; i < actions.length; i++) {
+          let key = actions[i];
+          if (g.keydowns[key]) {
+            // 如果按键被按下，调用注册的 action
+            g.actions[key]();
+          }
+        }
+
         // update
         g.update();
 
@@ -67,7 +95,7 @@
 
         // draw
         g.draw();
-      }, 1000/60);
+      }, 1000 / 60);
 
       return g;
     }
@@ -78,39 +106,20 @@
 
       const paddle = Paddle();
 
-      let [leftDown, rightDown] = [false, false];
-
-      window.addEventListener('keydown', function () {
-        // a'keycode is 65, d'keyCode is 68; 不使用key是因为key区分大小写
-        if (event.keyCode === 65) {
-          leftDown = true;
-        } else if (event.keyCode === 68) {
-          rightDown = true;
-        }
-      });
-
-      window.addEventListener('keyup', function () {
-        if (event.keyCode === 65) {
-          leftDown = false;
-        } else if (event.keyCode === 68) {
-          rightDown = false;
-        }
-      });
+      game.registerAction('a', function () {
+        paddle.moveLeft();
+      })
+      game.registerAction('d', function () {
+        paddle.moveRight();
+      })
 
       game.update = function () {
-        if (leftDown) {
-          paddle.moveLeft();
-        } else if (rightDown) {
-          paddle.moveRight();
-        }
       }
 
       game.draw = function () {
-        game.context.drawImage(paddle.image, paddle.x, paddle.y);        
+        game.context.drawImage(paddle.image, paddle.x, paddle.y);
       }
-
     }
-
     _main();
   </script>
 </body>
