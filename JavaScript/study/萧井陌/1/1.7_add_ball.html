@@ -40,13 +40,63 @@
         image,
         x: 100,
         y: 300,
-        speed: 5,
+        speed: 15,
       }
       o.moveLeft = function () {
+        // 虽然是工厂函数，但里面这些用this比较好
         o.x -= o.speed;
       }
       o.moveRight = function () {
         o.x += o.speed;
+      }
+
+      // 相撞
+      o.collide = function (ball) {
+        if (ball.y + ball.image.height > o.y) {
+          if (ball.x > o.x && ball.x < o.x + o.image.width) {
+            return true;
+          }
+        }
+
+        return false;
+      }
+      return o;
+    }
+
+    // Paddle 定义为类更好，这里采用的是工厂模式
+    const Ball = function () {
+      const image = imageFromPath('1_ball.png');
+      const o = {
+        image,
+        x: 100,
+        y: 250,
+        speedX: 5,
+        speedY: 5,
+        fired: false,
+      }
+
+      // 触发球运动
+      o.fire = function () {
+        o.fired = true;
+      }
+
+      // 运动
+      o.move = function () {
+        if (o.fired) {
+          if (o.x < 0 || o.x > 500) {
+            o.speedX *= -1;
+          }
+          if (o.y < 0 || o.y > 400) {
+            o.speedY *= -1;
+          }
+          o.x += o.speedX;
+          o.y += o.speedY;
+        }
+      }
+
+      // 反弹
+      o.reverse = function () {
+        o.speedY *= -1;
       }
       return o;
     }
@@ -112,18 +162,28 @@
 
       const paddle = Paddle();
 
+      const ball = Ball();
+
       game.registerAction('a', function () {
         paddle.moveLeft();
       })
       game.registerAction('d', function () {
         paddle.moveRight();
       })
+      game.registerAction('f', function () {
+        ball.fire();
+      })
 
       game.update = function () {
+        ball.move();
+        if (paddle.collide(ball)) {
+          ball.reverse();
+        }
       }
 
       game.draw = function () {
         game.drawImage(paddle);
+        game.drawImage(ball);
       }
     }
     _main();
