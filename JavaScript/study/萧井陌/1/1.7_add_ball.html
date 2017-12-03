@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>work but bad</title>
+  <style>
+    div {
+      text-align: center;
+    }
+
+    div #drawing {
+      border: 1px solid #333;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <canvas id="drawing" width="500" height="400"></canvas>
+  </div>
+  <script>
+    /**
+     * [myCanvas description]
+     * 封装 draw
+     * 还有缺点：大小写区分，最好大小写都可以
+     */
+    const imageFromPath = function (path) {
+      const img = new Image();
+      img.src = path;
+      return img;
+    }
+
+    // Paddle 定义为类更好，这里采用的是工厂模式
+    const Paddle = function () {
+      const image = imageFromPath('1_board.png');
+      const o = {
+        image,
+        x: 100,
+        y: 300,
+        speed: 5,
+      }
+      o.moveLeft = function () {
+        o.x -= o.speed;
+      }
+      o.moveRight = function () {
+        o.x += o.speed;
+      }
+      return o;
+    }
+
+    // 这里采用的也是工厂模式
+    const GuaGame = function () {
+      let g = {
+        actions: {},
+        keydowns: {},
+      };
+      const canvas = document.querySelector('#drawing');
+      const context = canvas.getContext('2d');
+
+      g.canvas = canvas;
+      g.context = context;
+
+      // draw
+      g.drawImage = function (guaImage) {
+        g.context.drawImage(guaImage.image, guaImage.x, guaImage.y);
+      }
+
+      // events
+      window.addEventListener('keydown', function (event) {
+        g.keydowns[event.key] = true;
+      });
+      window.addEventListener('keyup', function (event) {
+        g.keydowns[event.key] = false;
+      });
+
+      // register
+      g.registerAction = function (key, callback) {
+        g.actions[key] = callback;
+      };
+
+      // timer
+      setInterval(function () {
+        // events
+        const actions = Object.keys(g.actions);
+        for (let i = 0; i < actions.length; i++) {
+          let key = actions[i];
+          if (g.keydowns[key]) {
+            // 如果按键被按下，调用注册的 action
+            g.actions[key]();
+          }
+        }
+
+        // update
+        g.update();
+
+        // clear
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        // draw
+        g.draw();
+      }, 1000 / 60);
+
+      return g;
+    }
+
+    const _main = function () {
+
+      const game = GuaGame();
+
+      const paddle = Paddle();
+
+      game.registerAction('a', function () {
+        paddle.moveLeft();
+      })
+      game.registerAction('d', function () {
+        paddle.moveRight();
+      })
+
+      game.update = function () {
+      }
+
+      game.draw = function () {
+        game.drawImage(paddle);
+      }
+    }
+    _main();
+  </script>
+</body>
+
+</html>
