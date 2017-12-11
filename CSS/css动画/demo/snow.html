@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>snowing snow </title>
+  <style>
+    body {
+      background: lightseagreen;
+    }
+    /** 
+     * 自定义动画名称：
+     * top 从 0 到 100%；
+     * opacity 从 0 到 1 再到 0；
+     * rotate 从 0 到 360deg 再到 0
+     */
+    @keyframes mysnow {
+      /* init css style */
+      0% {
+        top: 0;
+        opacity: 0;
+      }
+      /* 动画 1/2 周期时的样式 */
+      50% {
+        opacity: 1;
+        transform: rotate(360deg);
+      }
+      /* end css style */
+      100% {
+        top: 100%;
+        opacity: 0;
+        transform: rotate(0);
+      }
+    }
+
+    .snow-container {
+      /* 设置为 fixed，屏幕上下滚动时不影响雪花飘落（防止上下滚动导致雪花消失） */
+      position: fixed;
+    }
+
+    .snow-img {
+      /* positon 为 relative 或者 absolute 都可以，反正是相对于 snow-container 定位 */
+      position: relative;
+      animation: mysnow 7s forwards;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="snowFlow">
+  </div>
+</body>
+<script>
+  window.onload = function () {
+    function snowFlow(left, height, src) {
+      // 创建雪花容器及雪花图片（通过动画控制雪花从雪花容器的顶部滑落到底部）
+      const snowContainer = document.createElement('div');
+      const snowImg = document.createElement('img');
+      snowImg.className = 'snow-img';
+      snowContainer.className = 'snow-container';
+
+      // 将雪花容器及雪花追加到事先准备好的 snowFlow 中
+      const snowFlow = document.getElementById('snowFlow');      
+      snowFlow.appendChild(snowContainer);
+      snowContainer.appendChild(snowImg);
+      
+      /**
+       * 随机创建容器宽高
+       * 宽：snowWidth 20px ～ 60px，同时设置雪花宽为100%，这样会营造雪花有大有小的效果
+       * 高：一般是 0 ～ viewport的高度，即 Math.random() * window.innerHeight，这样会营造雪花降落
+       *    有高有低的效果
+       * 偏移量：设置left值，一般 0 ～ viewport的宽度，即 Math.random() * window.innerWidth，这样会
+       *    营造雪花在屏幕水平方向随机出现
+       */
+
+      // 设置雪花容器尺寸
+      const snowWidth = `${Math.random() * 40 + 20}px`;
+      snowContainer.style.width = snowWidth;
+      snowContainer.style.height = `${height}px`;
+      snowContainer.style.left = `${left}px`;
+
+      // 设置雪花资源及尺寸
+      snowImg.src = src;      
+      snowImg.style.width = '100%';
+      
+      // 7s后雪花消失，css动画周期一般与这个值相同为好
+      setTimeout(function () {
+        snowFlow.removeChild(snowContainer);
+      }, 7000);
+    }
+
+    // 持续创建雪花
+    setInterval(function () {
+      const left = Math.random() * window.innerWidth;
+      const height = Math.random() * window.innerHeight;
+      const src = 'snow.png';
+      snowFlow(left, height, src);
+    }, 100)
+  }
+</script>
+
+</html>
