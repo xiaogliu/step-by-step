@@ -23,3 +23,7 @@ Error: Failure while executing: git config --local --replace-all homebrew.privat
 ```
 
 参考这个解决方法： https://apple.stackexchange.com/questions/209624/how-to-fix-homebrew-error-invalid-active-developer-path-after-upgrade-to-os-x
+
+这个是在装完 xcode 后出现的问题，查看解决方法，貌似和没有装 xcode 的 Command Line Tools 有关，通过启动 xcode 然后给予 develop 权限，然后再通过 xcode 安装 watchman 解决：      
+
+You will also need to install the Xcode Command Line Tools. Open Xcode, then choose "Preferences..." from the Xcode menu. Go to the Locations panel and install the tools by selecting the most recent version in the Command Line Tools dropdown.
