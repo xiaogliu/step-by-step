@@ -33,6 +33,8 @@ vscode关键是不会卡顿，其他插件、配色、快捷键和 atom 能基�
     "workbench.statusBar.visible": true,
     "workbench.activityBar.visible": false,
     "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?",
+    "explorer.confirmDragAndDrop": false,
+    "vetur.validation.template": false,
 }
 ```
 
@@ -57,3 +59,11 @@ vscode关键是不会卡顿，其他插件、配色、快捷键和 atom 能基�
 因为我是用 markdown 主要想使用常用快捷键，比如加粗，插入链接，代码块等，后来使用了 [markdown shortcus](https://marketplace.visualstudio.com/items?itemName=mdickin.markdown-shortcuts) 配置简单，快捷键够用。   
 
 如果遇到格式化表格的需求再另说。   
+
+## vue
+
+插件 vetur 新版对与 template 的格式检查特别恶心，标签中设计 vue 自定义属性必须换行，果断禁用这个检查：   
+
+```json
+"vetur.validation.template": false,
+```
