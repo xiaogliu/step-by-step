@@ -9,7 +9,56 @@ const testBind = getId.apply(document, ['id']);
 const testBind = getId.call(document, `id`);
 ```
 
-> 关于指定 `this` 指向再理解
+> 关于指定 `this` 指向再理解，见下面代码：   
+
+代码1:   
+
+```js
+let obj1 = {a: 111};
+let obj2 = {a: 222};
+var a = 333;
+function whatIsThis() {
+  console.log(this.a);
+}
+
+whatIsThis.call(this); // 333
+whatIsThis.call(obj1); // 111
+whatIsThis.call(obj2); // 222
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
+```
+
+复杂一点的代码2:
+
+```js
+function Product(name, price) {
+  this.name = name;
+  this.price = price;
+
+  if (price < 0) {
+    throw RangeError('Cannot create product ' +
+                      this.name + ' with a negative price');
+  }
+}
+
+function Food(name, price) {
+  // 这里的 this 指的就是 Product，联想数组 forEach 方法： arr.forEach(function(e) {})
+  Product.call(this, name, price); 
+  this.category = 'food';
+}
+
+//等同于
+function Food(name, price) { 
+    this.name = name;
+    this.price = price;
+    if (price < 0) {
+        throw RangeError('Cannot create product ' +
+                this.name + ' with a negative price');
+    }
+
+    this.category = 'food'; 
+}
+```
  
 - 除了指定 `this` 指向，有时是为了更方便转化参数，比如： `Math.max()`不能接收数组作为参数，为了能够直接处理数组，可以使用 `apply`
 
