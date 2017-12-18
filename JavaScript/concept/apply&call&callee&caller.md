@@ -9,6 +9,8 @@ const testBind = getId.apply(document, ['id']);
 const testBind = getId.call(document, `id`);
 ```
 
+> 关于指定 `this` 指向再理解
+ 
 - 除了指定 `this` 指向，有时是为了更方便转化参数，比如： `Math.max()`不能接收数组作为参数，为了能够直接处理数组，可以使用 `apply`
 
 ```js
