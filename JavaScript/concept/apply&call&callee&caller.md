@@ -42,8 +42,12 @@ function Product(name, price) {
 }
 
 function Food(name, price) {
-  // 这里的 this 指的就是 Product，联想数组 forEach 方法： arr.forEach(function(e) {})
-  Product.call(this, name, price); 
+  // ~~这里的 this 指的就是 Product~~，联想数组 forEach 方法： arr.forEach(function(e) {})
+  /**
+   * 不对，这的 this 指的是 Food，call 方法的作用就是通过改变某个已有对象（一般是函数）中 this 的指向（通过第一个参数确定），
+   * 从而达到使另一个对象使用已有函数方法和属性的目的
+   */
+  Product.call(this, name, price);
   this.category = 'food';
 }
 
