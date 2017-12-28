@@ -4,8 +4,15 @@ export default {
    * @param value 输入
    */
   checkPhone(value) {
-    const numb = Number(value);
     const reg = /^1(0|3|4|5|7|8)\d{9}$/;
-    return reg.test(numb);
-  }
+    return reg.test(value);
+  },
+  /**
+   * 规则：8-16位数字、字母或下划线
+   * @param value 输入
+   */
+  checkPw(value) {
+    const reg = /^[0-9A-Za-z_]{8,16}$/;
+    return reg.test(value);
+  },
 };
