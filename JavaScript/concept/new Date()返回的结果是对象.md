@@ -24,4 +24,6 @@ const a = new Date();
 console.log(typeof a);
 ```
 
-`typeof a` 返回的是 `object`！很好理解啊，**因为是对象的实例**嘛！
+`typeof a` 返回的是 `object`！很好理解啊，**因为是对象的实例**嘛，虽然返回的看上去像字符串！   
+
+> 理解原理，而非无意识的当码农。
