@@ -30,7 +30,7 @@ git remote add origin git@github.com:xiaogliu/repo-name.git
 git push -u origin master
 ```
 
-4. 将已有的仓库推到远程仓库
+4. 将已有的仓库推到远程仓库（通过 -u 就可以将这个分支和远程分支关联起来，以后你就不需要再打 origin branch 了）
 
 ```
 git remote add origin git@github.com:xiaogliu/repo-name.git
@@ -67,3 +67,13 @@ To revert that ignorance use the following command:（必须有这步，不然�
 ```
 git update-index --no-assume-unchanged <file>
 ```
+
+8. 回退到某个 commit 
+
+有个很危险的命令：   
+
+```bash
+git reset --hard <commit-hash>
+```
+
+> 注意：带上 `--hard` 参数会将本地未提交的记录全部删除，这个时不可恢复的。（虽然 commit 也会删除，但在一定时间内还是可以恢复的。）
