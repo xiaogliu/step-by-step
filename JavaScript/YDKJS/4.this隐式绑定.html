@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <p>此处 this 都是隐式绑定</p>
+  <script>
+    var a = 0;
+
+    function implicitBind() {
+      console.log(this.a);
+    }
+
+    var o = {
+      a: 1,
+      foo: implicitBind,
+    };
+
+    // 默认绑定
+    implicitBind(); // 0
+
+    // 隐式绑定
+    o.foo(); // 1
+  </script>
+</body>
+
+</html>
