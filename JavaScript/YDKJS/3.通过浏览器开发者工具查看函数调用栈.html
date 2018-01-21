@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <p>在开发这工具中设置断点，查看函数调用栈：通过 source 菜单，同时可以看到 this 指向</p>
+  <script>
+    function baz() {
+      console.log('baz');
+      bar();
+    }
+
+    function bar() {
+      console.log('bar');
+      foo();
+    }
+
+    function foo() { // 设置断点 debugger;
+      console.log('foo');
+    }
+    baz();
+  </script>
+</body>
+
+</html>
