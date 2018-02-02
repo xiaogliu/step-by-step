@@ -34,6 +34,36 @@
 
 如果之前没有开发过原生 APP，还需要熟悉下原生 APP 的开发工具：安卓使用 [Android Studio](https://developer.android.com/studio/index.html)，iOS 使用 [Xcode](https://developer.apple.com/support/xcode/)。它们如何配合 React Native 使用在 [官方文档](https://facebook.github.io/react-native/docs/getting-started.html)有说明，这部分没有太多坑，遇到问题自行谷歌一般都有解决方案。    
 
+这里列出常见的坑：   
+
+1. 无法更新 gradle，需要设置代理；
+2. 提示下面的错误：   
+
+```bash
+> Could not resolve all files for configuration ':classpath'.
+   > Could not find com.android.tools.build:gradle:3.0.1.
+```
+解决方案：
+
+在 android > build.gradle 添加 google 的 maven 仓库，如下：
+
+```js
+buildscript {
+    repositories {
+        //新的插件需要在google仓库下载
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+    }
+}
+```
+
+更多问题参考这片文章：安卓打包发布那些坑。   
+
+如果顺利，通过命令行，或者点击IDE运行按钮，Demo 可以在模拟器中启动。   
+
 > 在 [step_by_step/other/react/react_native/](https://github.com/xiaogliu/step_by_step/tree/master/other/react/react_native) 详细记录了我在使用 React Native 开发过程中遇到的问题及解决方案，就是稍显啰嗦，有兴趣可以看下。（PS.仓库 [step_by_step](https://github.com/xiaogliu/step_by_step) 主要记录日常所学，也有很多有趣的东西呢，比如 [通过AI玩微信跳一跳游戏环境配置](https://github.com/xiaogliu/step_by_step/blob/master/python/2.%E9%80%9A%E8%BF%87AI%E7%8E%A9%E5%BE%AE%E4%BF%A1%E8%B7%B3%E4%B8%80%E8%B7%B3%E6%B8%B8%E6%88%8F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.md)，欢迎 star，嘿嘿嘿）   
 
 ## 官方 Demo 目录介绍
@@ -43,6 +73,8 @@
 blabla
 
 # 配置路由
+
+# 首先建立独立页面，方便后续管理
 
 重点 react navigation，详细使用另写一篇文章。着重介绍如何单独设置某个页面的样式，看内容，太长的话另开文章。    
 
