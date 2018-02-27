@@ -1,7 +1,6 @@
-最开始接到公司通知要开发 React Native APP 的时候，很兴奋，因为之前的技术栈主要是 Vue 和 Angular，虽然一直想在实践中使用 react对于 React 只是写过几个 Demo，一直想在实际项目中使用但没有机会。不过公司给的开发时间很短，从设计需求到第一版送审只给了一个月时间。鉴于之前使用 Vue 的经验（即便不是很熟的情况下也可以把官网 Demo 撸下来改改就能上线，功能及性能可以后续迭代优化）以及业务 API 90%以上都已和后台同学联调 OK，当时想一个月绰绰有余。
+最开始接到公司通知要开发 React Native APP 的时候，很兴奋，因为之前的技术栈主要是 Vue 和 Angular，对于 React 只是写过几个 Demo，一直想在实际项目中使用但没有机会。不过公司给的开发时间很短，从设计需求到第一版送审只给了一个月时间。鉴于之前使用 Vue 的经验（即便不是很熟的情况下也可以把官网 Demo 撸下来改改就能上线，功能及性能可以后续迭代优化）以及业务 API 90%以上都已和后台同学联调 OK，当时想一个月绰绰有余。
 
-
-虽说最后完成了任务（App 线上地址[iOS](https://itunes.apple.com/cn/app/%E6%A6%84%E7%9B%9B%E9%87%91%E8%9E%8D/id1336295162?mt=8)，[安卓](https://static-https.lansheng8.com/lsapp_1.0.1.apk)），但开发中确很多坑。
+虽说最后 APP 上线了（App 线上地址[iOS](https://itunes.apple.com/cn/app/%E6%A6%84%E7%9B%9B%E9%87%91%E8%9E%8D/id1336295162?mt=8)，[安卓](https://static-https.lansheng8.com/lsapp_1.0.1.apk)），但开发中踩了很多坑。
 
 首先，难以找到一个开箱即用的 React Native APP Demo。目前存在的 Demo 要么过于简单，比如 React Native 官网提供的 Demo [AwesomeProject](https://facebook.github.io/react-native/docs/getting-started.html) ，这个 Demo 只提供了最简功能，对于路由（导航组件）、状态管理等并没有涉及。虽然 React Native 教程中对于复杂应用应如何选择组件及第三方库都有提及，但并没有给出完整示例。而另一方面，又有很多 [React Native APP](https://github.com/ReactNativeNews/React-Native-Apps) 虽已开源，但都是用于特定场合的完整 APP，有些 APP 的目录结构本身就不友好，并且也没有完整的说明文档。
 
@@ -796,4 +795,3 @@ function mapStateToProps(state) {
 * 常用组件介绍，比如下拉刷新、alert、列表渲染、WebView 等
 
 # 参考资料
-待补充
