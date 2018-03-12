@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>navBar</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+  <div class="header">
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="./easyMenu.js"></script>
+  <script>
+    const test = new EasyMenu('.header');
+    test.init({
+      link: {
+        '首页': 'www.google.com',
+        '有格业务': 'www.google.com',
+        '理念优势': 'www.baidu.com',
+        '关于我们': 'www.lagou.com',
+      }
+    });
+  </script>
+</body>
+
+</html>

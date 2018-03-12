@@ -1,0 +1,115 @@
+html,
+body {
+  position: relative;
+  height: 100%;
+}
+
+.header {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 120px;
+  width: 100%;
+  padding: 0 24px;
+  z-index: 9999;
+  background-color: lightpink;
+}
+
+.header img {
+  width: 192px;
+  height: 68px;
+  z-index: 9999;
+}
+
+.menu-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 48px;
+  height: 48px;
+  z-index: 9999;
+}
+
+.menu-btn div {
+  width: 40px;
+  height: 4px;
+  background-color: #000;
+  border-radius: 2px;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  transition: 0.5s all;
+}
+
+.menu-btn-click div:nth-child(1) {
+  transform: translateY(13px) rotate(45deg);
+}
+
+.menu-btn-click div:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-btn-click div:nth-child(3) {
+  transform: translateY(-13px) rotate(-45deg);
+}
+
+.menu-content {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 260px;
+  height: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  opacity: 0;
+  transition: 0.5s all;
+  z-index: 9999;
+}
+
+.menu-content div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 80px;
+  margin-top: 8px;
+  font-size: 28px;
+  border-bottom: 1px solid #5c5c5c;
+}
+
+.menu-content div a {
+  color: #ddd;
+}
+
+.menu-content-show {
+  height: 30%;
+  opacity: 1;
+  z-index: 9999;
+}
+
+.menu-cover {
+  position: fixed;
+  opacity: 0;
+  width: 100%;
+  height: 0%;
+  z-index: 999;
+}
+
+.menu-cover-show {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  background-color: red;
+  opacity: 1;
+  transition: 2s all;
+}
