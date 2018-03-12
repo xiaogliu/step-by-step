@@ -1,8 +1,11 @@
 const http = require("http");
 const path = require("path");
 const fs = require("fs");
+const url = require("url");
 const mime = require("./mime");
 const config = require("./config/default.json");
+
+const hasTrailingSlash = url => url[url.length - 1] === "/";
 
 // 创建静态类
 class StaticServer {
@@ -12,6 +15,7 @@ class StaticServer {
     this.indexPage = config.indexPage;
   }
 
+  // 404
   respondNotFound(req, res) {
     res.writeHead(404, {
       "Content-Type": "text/html"
@@ -23,6 +27,7 @@ class StaticServer {
     );
   }
 
+  // 响应文件
   respondFile(pathName, req, res) {
     const readStream = fs.createReadStream(pathName);
 
@@ -31,10 +36,57 @@ class StaticServer {
     readStream.pipe(res);
   }
 
+  // 相应目录
+  respondDirectory(pathName, req, res) {
+    const indexPagePath = path.join(pathName, this.indexPage);
+    if (fs.existsSync(indexPagePath)) {
+      this.respondFile(indexPagePath, req, res);
+    } else {
+      fs.readdir(pathName, (err, files) => {
+        if (err) {
+          res.writeHead(500);
+          return res.end(err);
+        }
+        const requestPath = url.parse(req.url).pathname;
+        let content = `<h1>Index of ${requestPath}</h1>`;
+        files.forEach(file => {
+          let itemLink = path.join(requestPath, file);
+          const stat = fs.statSync(path.join(pathName, file));
+          if (stat && stat.isDirectory()) {
+            itemLink = path.join(itemLink, "/");
+          }
+          content += `<p><a href='${itemLink}'>${file}</a></p>`;
+        });
+        res.writeHead(200, {
+          "Content-Type": "text/html"
+        });
+        res.end(content);
+      });
+    }
+  }
+
+  // 重定向
+  respondRedirect(req, res) {
+    const location = req.url + "/";
+    res.writeHead(301, {
+      Location: location,
+      "Content-Type": "text/html"
+    });
+    res.end(`Redirecting to <a href='${location}'>${location}</a>`);
+  }
+
+  // 路由处理
   routeHandler(pathName, req, res) {
     fs.stat(pathName, (err, stat) => {
       if (!err) {
-        this.respondFile(pathName, req, res);
+        const requestedPath = url.parse(req.url).pathname;
+        if (hasTrailingSlash(requestedPath) && stat.isDirectory()) {
+          this.respondDirectory(pathName, req, res);
+        } else if (stat.isDirectory()) {
+          this.respondRedirect(req, res);
+        } else {
+          this.respondFile(pathName, req, res);
+        }
       } else {
         this.respondNotFound(req, res);
       }
