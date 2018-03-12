@@ -3,14 +3,153 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <link rel="stylesheet" href="./index.css">
+  <title>有格金融</title>
+  <style>
+    body,
+    html {
+      padding: 0;
+      margin: 0
+    }
+
+    .header {
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 60px;
+      width: 100%;
+      padding: 0 12px;
+      z-index: 9999
+    }
+
+    .header img {
+      width: 96px;
+      height: 34px;
+      z-index: 9999
+    }
+
+    .menu {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      z-index: 9999
+    }
+
+    .menu .menu-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      width: 100%;
+      height: 80%
+    }
+
+    .menu .menu-btn div {
+      width: 20px;
+      height: 2px;
+      background-color: #000;
+      border-radius: 1px;
+      animation-duration: .5s;
+      animation-fill-mode: both;
+      transition: .5s all
+    }
+
+    .menu-content,
+    .menu-cover {
+      display: none
+    }
+
+    .swiper-container {
+      width: 100%;
+      height: 100%;
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    .swiper-container .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      display: flex;
+      justify-content: center
+    }
+
+    .swiper-slide2 {
+      display: none
+    }
+  </style>
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link href="/css/index.fb6b9870e23ef4d32b52.css" rel="stylesheet">
 </head>
 
 <body>
-  <h1>test</h1>
+  <div class="header">
+    <img src="/./img/logo.ee718533badb1a2981dca1e06d89c461.png" alt="有格金融">
+    <div class="menu">
+      <div class="menu-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="menu-content">
+      <div class="item">
+        <a href="">首页</a>
+      </div>
+      <div class="item">
+        <a href="">有格业务</a>
+      </div>
+      <div class="item">
+        <a href="">理念优势</a>
+      </div>
+      <div class="item">
+        <a href="">关于我们</a>
+      </div>
+    </div>
+    <div class="menu-cover"></div>
+  </div>
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide swiper-slide1">
+        <div>
+          <div class="slide-title">有格金融</div>
+          <div class="slide-intro">别具一格的创新服务。</div>
+          <div class="slide-btn">
+            <a href="./business.html">more ></a>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide swiper-slide2">
+        <div>
+          <div class="slide-title">理念 · 优势</div>
+          <div class="slide-intro">个性、创新、共享、专业是有格的企业文化。
+            <br> 我们不断为他人提供帮助，只为创建一个和谐、
+            <br>互帮、互助的创投环境</div>
+          <div class="slide-btn">
+            <a href="./business.html">more ></a>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide swiper-slide3">
+        <div>
+          <div class="slide-title">关于我们</div>
+          <div class="slide-intro">拥有行业内多年服务经验的核心团队，
+            <br> 为您的项目保驾护航。</div>
+          <div class="slide-btn">
+            <a href="./business.html">more ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+  <script type="text/javascript" src="/js/vendors.fb6b9870e23ef4d32b52.js"></script>
+  <script type="text/javascript" src="/js/index.fb6b9870e23ef4d32b52.js"></script>
 </body>
 
 </html>

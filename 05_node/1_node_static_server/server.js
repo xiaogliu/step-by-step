@@ -1,6 +1,7 @@
 const http = require("http");
 const path = require("path");
 const fs = require("fs");
+const mime = require("./mime");
 const config = require("./config/default.json");
 
 // 创建静态类
@@ -24,6 +25,9 @@ class StaticServer {
 
   respondFile(pathName, req, res) {
     const readStream = fs.createReadStream(pathName);
+
+    // 设置mime
+    res.setHeader("Content-Type", mime.lookup(pathName));
     readStream.pipe(res);
   }
 

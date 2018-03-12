@@ -1,6 +1,6 @@
 {
   "port": 9999,
   "root":
-    "/Users/liuxiaoguang/study/my_project/step_by_step/05_node/1_node_static_server",
+    "/Users/liuxiaoguang/study/my_project/step_by_step/05_node/1_node_static_server/test_file",
   "indexPage": "index.html"
 }
