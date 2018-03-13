@@ -13,6 +13,74 @@ class StaticServer {
     this.port = config.port;
     this.root = config.root;
     this.indexPage = config.indexPage;
+    this.enableCacheControl = config.cacheControl;
+    this.enableExpires = config.expires;
+    this.enableETag = config.etag;
+    this.enableLastModified = config.lastModified;
+    this.maxAge = config.maxAge;
+  }
+
+  // 响应入口
+  respond(pathName, req, res) {
+    fs.stat(pathName, (err, stat) => {
+      if (err) return respondError(err, res);
+      this.setFreshHeaders(stat, res);
+      if (this.isFresh(req.headers, res._headers)) {
+        this.respondNotModified(res);
+      } else {
+        this.respondFile(pathName, req, res);
+      }
+    });
+  }
+
+  // 产生 ETag
+  generateETag(stat) {
+    const mtime = stat.mtime.getTime().toString(16);
+    const size = stat.size.toString(16);
+    return `W/"${size}-${mtime}"`;
+  }
+
+  // 缓存首部
+  setFreshHeaders(stat, res) {
+    const lastModified = stat.mtime.toUTCString();
+    if (this.enableExpires) {
+      const expireTime = new Date(
+        Date.now() + this.maxAge * 1000
+      ).toUTCString();
+      res.setHeader("Expires", expireTime);
+    }
+    if (this.enableCacheControl) {
+      res.setHeader("Cache-Control", `public, max-age=${this.maxAge}`);
+    }
+    if (this.enableLastModified) {
+      res.setHeader("Last-Modified", lastModified);
+    }
+    if (this.enableETag) {
+      res.setHeader("ETag", this.generateETag(stat));
+    }
+  }
+
+  // 判断缓存是否新鲜
+  isFresh(reqHeaders, resHeaders) {
+    const noneMatch = reqHeaders["if-none-match"];
+    const lastModified = reqHeaders["if-modified-since"];
+    if (!(noneMatch || lastModified)) return false;
+    if (noneMatch && noneMatch !== resHeaders["etag"]) return false;
+    if (lastModified && lastModified !== resHeaders["last-modified"])
+      return false;
+    return true;
+  }
+
+  // 500
+  respondError(err, res) {
+    res.writeHead(500);
+    return res.end(err);
+  }
+
+  // 304
+  respondNotModified(res) {
+    res.statusCode = 304;
+    res.end();
   }
 
   // 404
@@ -36,7 +104,7 @@ class StaticServer {
     readStream.pipe(res);
   }
 
-  // 相应目录
+  // 响应目录
   respondDirectory(pathName, req, res) {
     const indexPagePath = path.join(pathName, this.indexPage);
     if (fs.existsSync(indexPagePath)) {
@@ -85,7 +153,7 @@ class StaticServer {
         } else if (stat.isDirectory()) {
           this.respondRedirect(req, res);
         } else {
-          this.respondFile(pathName, req, res);
+          this.respond(pathName, req, res);
         }
       } else {
         this.respondNotFound(req, res);
