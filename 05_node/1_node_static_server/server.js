@@ -6,19 +6,60 @@ const zlib = require("zlib");
 const mime = require("./mime");
 const config = require("./config/default.json");
 
+// 命令行参数配置
+var options = require("yargs")
+  .option("p", { alias: "port", describe: "Port number", type: "number" })
+  .option("r", {
+    alias: "root",
+    describe: "Static resource directory",
+    type: "string"
+  })
+  .option("i", { alias: "index", describe: "Default page", type: "string" })
+  .option("c", {
+    alias: "cachecontrol",
+    default: true,
+    describe: "Use Cache-Control",
+    type: "boolean"
+  })
+  .option("e", {
+    alias: "expires",
+    default: true,
+    describe: "Use Expires",
+    type: "boolean"
+  })
+  .option("t", {
+    alias: "etag",
+    default: true,
+    describe: "Use ETag",
+    type: "boolean"
+  })
+  .option("l", {
+    alias: "lastmodified",
+    default: true,
+    describe: "Use Last-Modified",
+    type: "boolean"
+  })
+  .option("m", {
+    alias: "maxage",
+    describe: "Time a file should be cached for",
+    type: "number"
+  })
+  .help()
+  .alias("?", "help").argv;
+
 const hasTrailingSlash = url => url[url.length - 1] === "/";
 
 // 创建静态类
 class StaticServer {
   constructor() {
-    this.port = config.port;
-    this.root = config.root;
-    this.indexPage = config.indexPage;
-    this.enableCacheControl = config.cacheControl;
-    this.enableExpires = config.expires;
-    this.enableETag = config.etag;
-    this.enableLastModified = config.lastModified;
-    this.maxAge = config.maxAge;
+    this.port = options.p || config.port;
+    this.root = options.r || config.root;
+    this.indexPage = options.i || config.indexPage;
+    this.enableCacheControl = options.c;
+    this.enableExpires = options.e;
+    this.enableETag = options.t;
+    this.enableLastModified = options.l;
+    this.maxAge = options.m || config.maxAge;
     this.zipMatch = new RegExp(config.zipMatch);
   }
 
