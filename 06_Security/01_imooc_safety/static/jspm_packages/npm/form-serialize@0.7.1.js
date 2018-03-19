@@ -1,0 +1,1 @@
+module.exports = require("npm:form-serialize@0.7.1/index.js");

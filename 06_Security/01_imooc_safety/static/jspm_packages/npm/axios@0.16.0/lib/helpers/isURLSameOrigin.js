@@ -1,0 +1,35 @@
+/* */ 
+'use strict';
+var utils = require('../utils');
+module.exports = (utils.isStandardBrowserEnv() ? (function standardBrowserEnv() {
+  var msie = /(msie|trident)/i.test(navigator.userAgent);
+  var urlParsingNode = document.createElement('a');
+  var originURL;
+  function resolveURL(url) {
+    var href = url;
+    if (msie) {
+      urlParsingNode.setAttribute('href', href);
+      href = urlParsingNode.href;
+    }
+    urlParsingNode.setAttribute('href', href);
+    return {
+      href: urlParsingNode.href,
+      protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+      host: urlParsingNode.host,
+      search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+      hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+      hostname: urlParsingNode.hostname,
+      port: urlParsingNode.port,
+      pathname: (urlParsingNode.pathname.charAt(0) === '/') ? urlParsingNode.pathname : '/' + urlParsingNode.pathname
+    };
+  }
+  originURL = resolveURL(window.location.href);
+  return function isURLSameOrigin(requestURL) {
+    var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+    return (parsed.protocol === originURL.protocol && parsed.host === originURL.host);
+  };
+})() : (function nonStandardBrowserEnv() {
+  return function isURLSameOrigin() {
+    return true;
+  };
+})());
