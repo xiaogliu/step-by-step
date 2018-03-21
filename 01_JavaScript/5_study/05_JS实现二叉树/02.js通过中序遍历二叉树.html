@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>JS实现二叉树</title>
+</head>
+
+<body>
+  <script>
+    // 二叉树构造函数
+    function BinaryTree() {
+      // 节点构造函数
+      function Node(key) {
+        this.key = key;
+        this.left = null;
+        this.right = null;
+      }
+
+      // 定义 root 节点
+      let root = null;
+
+      // 定义插入节点逻辑
+      function insertNode(node, newNode) {
+        if (newNode.key < node.key) {
+          if (node.left === null) {
+            // 此处直接将左节点赋值为一个节点对象，而不是单纯的数值，比较下面注释的代码
+            node.left = newNode;
+          } else {
+            // 这里有个递归操作
+            insertNode(node.left, newNode)
+          }
+        } else {
+          if (node.right === null) {
+            node.right = newNode;
+          } else {
+            // 这里有个递归操作
+            insertNode(node.right, newNode)
+          }
+        }
+      }
+
+      // 暴露给外界插入节点方法
+      this.insert = function (key) {
+        let newNode = new Node(key);
+
+        if (root === null) {
+          root = newNode;
+        } else {
+          insertNode(root, newNode);
+        }
+      }
+
+      // 中序遍历具体逻辑
+
+      function inOrderTraverseNode(node, cb) {
+        if (node !== null) {
+          inOrderTraverseNode(node.left, cb);
+          cb(node.key);
+          inOrderTraverseNode(node.right, cb);
+        }
+      }
+
+
+      // 暴露给外界的遍历二叉树方法（中序遍历）
+      this.inOrderTraverse = function (cb) {
+        inOrderTraverseNode(root, cb);
+      }
+    }
+
+    // 生成排序二叉树
+    const arr = [8, 1, 3, 6, 4, 10, 14, 13];
+    const binaryTree = new BinaryTree();
+    arr.forEach(function (v) {
+      binaryTree.insert(v);
+    });
+
+    // 中序遍历
+    const cb = function (key) {
+      console.log(key);
+    }
+
+    binaryTree.inOrderTraverse(cb);
+  </script>
+</body>
+
+</html>
