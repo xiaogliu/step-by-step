@@ -7,8 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>全屏滚动</title>
   <style>
-    html,
-    body {
+    * {
       padding: 0;
       margin: 0;
     }
@@ -22,7 +21,7 @@
     #main {
       position: relative;
       top: 0;
-      transition: all 0.5s;
+      transition: all 500ms ease;
     }
 
     .page {
@@ -40,6 +39,22 @@
 
     .page3 {
       background-color: green;
+    }
+
+    .nav {
+      position: fixed;
+      top: 50%;
+      right: 10px;
+      width: 15px;
+      transform: translateY(-50%);
+    }
+
+    .nav p {
+      width: 15px;
+      height: 15px;
+      background-color: #fff;
+      margin: 15px 0;
+      border-radius: 50%;
     }
   </style>
 </head>
@@ -152,6 +167,16 @@
     function turnPage(height) {
       main.style.top = height + 'px';
     }
+
+    // 创建右侧导航
+    var nav = document.createElement('div');
+    nav.className = 'nav';
+
+    for (var i = 0; i < pagesNum; i++) {
+      nav.innerHTML += '<p class="nav-dot"></p>';
+    }
+    // document.body.appendChild(nav);
+    main.appendChild(nav);
   </script>
 </body>
 
