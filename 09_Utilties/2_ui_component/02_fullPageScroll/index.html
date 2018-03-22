@@ -55,6 +55,11 @@
       background-color: #fff;
       margin: 15px 0;
       border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .nav p.active {
+      background-color: #000;
     }
   </style>
 </head>
@@ -150,6 +155,7 @@
           0 && main.offsetTop > -(viewHeight * (pagesNum - 1))) {
           now = now - viewHeight;
           turnPage(now);
+          changeNav(now);
         }
 
         // 下翻
@@ -157,6 +163,7 @@
           0 && main.offsetTop < 0) {
           now = now + viewHeight;
           turnPage(now);
+          changeNav(now);
         }
         endTime = new Date().getTime();
       } else {
@@ -169,14 +176,51 @@
     }
 
     // 创建右侧导航
+
+    // 创建导航DOM
     var nav = document.createElement('div');
     nav.className = 'nav';
 
     for (var i = 0; i < pagesNum; i++) {
       nav.innerHTML += '<p class="nav-dot"></p>';
     }
-    // document.body.appendChild(nav);
     main.appendChild(nav);
+
+    var navDots = document.querySelectorAll('.nav-dot');
+    navDots = Array.prototype.slice.call(navDots);
+
+    // 添加初始样式
+    navDots[0].classList.add('active');
+
+    // 删除 类名
+    function deleteClassName(el, className) {
+      if (el.classList.contains(className)) {
+        el.classList.remove(className);
+      }
+    }
+
+    // 随页面滚动改变样式
+    function changeNav(height) {
+      navDots.forEach(function (el) {
+        deleteClassName(el, 'active')
+      })
+
+      var i = -(height / viewHeight);
+      navDots[i].classList.add('active');
+    }
+
+    // 添加点击事件
+    navDots.forEach(function (el, i) {
+      EventUtil.addHandler(el, "click", function () {
+        turnPage(-(i * viewHeight));
+        navDots.forEach(function (el) {
+          deleteClassName(el, 'active')
+        })
+
+        el.classList.add('active');
+
+      });
+    })
   </script>
 </body>
 
