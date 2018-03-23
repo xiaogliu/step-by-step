@@ -42,7 +42,7 @@ const EventUtil = {
   // 鼠标滚轮事件
   getWheelDelta: function(event) {
     if (event.wheelDelta) {
-      event.wheelDelta;
+      return event.wheelDelta;
     } else {
       return -event.detail * 40;
     }
