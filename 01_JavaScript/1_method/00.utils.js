@@ -106,7 +106,7 @@ export default {
   timeShiftFormat(ts, supreme = true, redPacket = false) {
     if (ts) {
       // 如果是两位数的时分,前面加个0
-      const formatNumber = (num) => {
+      const formatNumber = num => {
         let numb = num;
         if (numb < 10) {
           numb = `0${numb}`;
