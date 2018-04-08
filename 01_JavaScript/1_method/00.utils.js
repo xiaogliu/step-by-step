@@ -135,4 +135,20 @@ export default {
     }
     return '--';
   },
+
+  /**
+   * 获取视图宽高，更好的兼容性
+   */
+  getViewport() {
+    if (document.compatMode === 'BackCompat') {
+      return {
+        width: document.body.clientWidth,
+        height: document.body.clientHeight,
+      };
+    }
+    return {
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight,
+    };
+  }
 };
