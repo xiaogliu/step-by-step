@@ -1,7 +1,7 @@
 {
   "port": 9999,
   "root":
-    "/Users/liuxiaoguang/study/my_project/step_by_step/05_node/01_node_static_server/test_file",
+    "/Users/liuxiaoguang/study/my_project/step_by_step/05_node/01_node_static_server/root",
   "indexPage": "index.html",
   "cacheControl": true,
   "expires": true,
