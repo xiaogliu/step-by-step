@@ -1,53 +1,53 @@
-const http = require("http");
-const path = require("path");
-const fs = require("fs");
-const url = require("url");
-const zlib = require("zlib");
-const mime = require("./mime");
-const config = require("./config/default.json");
+const http = require('http');
+const path = require('path');
+const fs = require('fs');
+const url = require('url');
+const zlib = require('zlib');
+const mime = require('./mime');
+const config = require('./config/default.json');
 
 // 命令行参数配置
-var options = require("yargs")
-  .option("p", { alias: "port", describe: "Port number", type: "number" })
-  .option("r", {
-    alias: "root",
-    describe: "Static resource directory",
-    type: "string"
+var options = require('yargs')
+  .option('p', { alias: 'port', describe: 'Port number', type: 'number' })
+  .option('r', {
+    alias: 'root',
+    describe: 'Static resource directory',
+    type: 'string',
   })
-  .option("i", { alias: "index", describe: "Default page", type: "string" })
-  .option("c", {
-    alias: "cachecontrol",
+  .option('i', { alias: 'index', describe: 'Default page', type: 'string' })
+  .option('c', {
+    alias: 'cachecontrol',
     default: true,
-    describe: "Use Cache-Control",
-    type: "boolean"
+    describe: 'Use Cache-Control',
+    type: 'boolean',
   })
-  .option("e", {
-    alias: "expires",
+  .option('e', {
+    alias: 'expires',
     default: true,
-    describe: "Use Expires",
-    type: "boolean"
+    describe: 'Use Expires',
+    type: 'boolean',
   })
-  .option("t", {
-    alias: "etag",
+  .option('t', {
+    alias: 'etag',
     default: true,
-    describe: "Use ETag",
-    type: "boolean"
+    describe: 'Use ETag',
+    type: 'boolean',
   })
-  .option("l", {
-    alias: "lastmodified",
+  .option('l', {
+    alias: 'lastmodified',
     default: true,
-    describe: "Use Last-Modified",
-    type: "boolean"
+    describe: 'Use Last-Modified',
+    type: 'boolean',
   })
-  .option("m", {
-    alias: "maxage",
-    describe: "Time a file should be cached for",
-    type: "number"
+  .option('m', {
+    alias: 'maxage',
+    describe: 'Time a file should be cached for',
+    type: 'number',
   })
   .help()
-  .alias("?", "help").argv;
+  .alias('?', 'help').argv;
 
-const hasTrailingSlash = url => url[url.length - 1] === "/";
+const hasTrailingSlash = url => url[url.length - 1] === '/';
 
 // 创建静态类
 class StaticServer {
@@ -65,14 +65,14 @@ class StaticServer {
 
   // 压缩文件
   compressHandler(readStream, req, res) {
-    const acceptEncoding = req.headers["accept-encoding"];
+    const acceptEncoding = req.headers['accept-encoding'];
     if (!acceptEncoding || !acceptEncoding.match(/\b(gzip|deflate)\b/)) {
       return readStream;
     } else if (acceptEncoding.match(/\bgzip\b/)) {
-      res.setHeader("Content-Encoding", "gzip");
+      res.setHeader('Content-Encoding', 'gzip');
       return readStream.pipe(zlib.createGzip());
     } else if (acceptEncoding.match(/\bdeflate\b/)) {
-      res.setHeader("Content-Encoding", "deflate");
+      res.setHeader('Content-Encoding', 'deflate');
       return readStream.pipe(zlib.createDeflate());
     }
   }
@@ -95,7 +95,7 @@ class StaticServer {
     }
     return {
       start,
-      end
+      end,
     };
   }
 
@@ -108,18 +108,18 @@ class StaticServer {
       range.start > range.end
     ) {
       res.statusCode = 416;
-      res.setHeader("Content-Range", `bytes */${totalSize}`);
+      res.setHeader('Content-Range', `bytes */${totalSize}`);
       res.end();
       return null;
     } else {
       res.statusCode = 206;
       res.setHeader(
-        "Content-Range",
-        `bytes ${range.start}-${range.end}/${totalSize}`
+        'Content-Range',
+        `bytes ${range.start}-${range.end}/${totalSize}`,
       );
       return fs.createReadStream(pathName, {
         start: range.start,
-        end: range.end
+        end: range.end,
       });
     }
   }
@@ -136,28 +136,28 @@ class StaticServer {
     const lastModified = stat.mtime.toUTCString();
     if (this.enableExpires) {
       const expireTime = new Date(
-        Date.now() + this.maxAge * 1000
+        Date.now() + this.maxAge * 1000,
       ).toUTCString();
-      res.setHeader("Expires", expireTime);
+      res.setHeader('Expires', expireTime);
     }
     if (this.enableCacheControl) {
-      res.setHeader("Cache-Control", `public, max-age=${this.maxAge}`);
+      res.setHeader('Cache-Control', `public, max-age=${this.maxAge}`);
     }
     if (this.enableLastModified) {
-      res.setHeader("Last-Modified", lastModified);
+      res.setHeader('Last-Modified', lastModified);
     }
     if (this.enableETag) {
-      res.setHeader("ETag", this.generateETag(stat));
+      res.setHeader('ETag', this.generateETag(stat));
     }
   }
 
   // 判断缓存是否新鲜
   isFresh(reqHeaders, resHeaders) {
-    const noneMatch = reqHeaders["if-none-match"];
-    const lastModified = reqHeaders["if-modified-since"];
+    const noneMatch = reqHeaders['if-none-match'];
+    const lastModified = reqHeaders['if-modified-since'];
     if (!(noneMatch || lastModified)) return false;
-    if (noneMatch && noneMatch !== resHeaders["etag"]) return false;
-    if (lastModified && lastModified !== resHeaders["last-modified"])
+    if (noneMatch && noneMatch !== resHeaders['etag']) return false;
+    if (lastModified && lastModified !== resHeaders['last-modified'])
       return false;
     return true;
   }
@@ -177,26 +177,26 @@ class StaticServer {
   // 404
   respondNotFound(req, res) {
     res.writeHead(404, {
-      "Content-Type": "text/html"
+      'Content-Type': 'text/html',
     });
     res.end(
       `<h1>Not Found</h1><p>The requested URL ${
         req.url
-      } was not found on this server.</p>`
+      } was not found on this server.</p>`,
     );
   }
 
   // 响应文件
   respondFile(stat, pathName, req, res) {
     let readStream;
-    res.setHeader("Content-Type", mime.lookup(pathName));
-    res.setHeader("Accept-Ranges", "bytes");
-    if (req.headers["range"]) {
+    res.setHeader('Content-Type', mime.lookup(pathName));
+    res.setHeader('Accept-Ranges', 'bytes');
+    if (req.headers['range']) {
       readStream = this.rangeHandler(
         pathName,
-        req.headers["range"],
+        req.headers['range'],
         stat.size,
-        res
+        res,
       );
       if (!readStream) return;
     } else {
@@ -224,12 +224,12 @@ class StaticServer {
           let itemLink = path.join(requestPath, file);
           const stat = fs.statSync(path.join(pathName, file));
           if (stat && stat.isDirectory()) {
-            itemLink = path.join(itemLink, "/");
+            itemLink = path.join(itemLink, '/');
           }
           content += `<p><a href='${itemLink}'>${file}</a></p>`;
         });
         res.writeHead(200, {
-          "Content-Type": "text/html"
+          'Content-Type': 'text/html',
         });
         res.end(content);
       });
@@ -238,10 +238,10 @@ class StaticServer {
 
   // 重定向
   respondRedirect(req, res) {
-    const location = req.url + "/";
+    const location = req.url + '/';
     res.writeHead(301, {
       Location: location,
-      "Content-Type": "text/html"
+      'Content-Type': 'text/html',
     });
     res.end(`Redirecting to <a href='${location}'>${location}</a>`);
   }
@@ -289,12 +289,12 @@ class StaticServer {
       .listen(this.port, err => {
         if (err) {
           console.error(err);
-          console.info("Failed to start server");
+          console.info('Failed to start server');
         } else {
           console.info(
             `Server started on port ${
               this.port
-            }，you can open http://localhost:${this.port}`
+            }，you can open http://localhost:${this.port}`,
           );
         }
       });

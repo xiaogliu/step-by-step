@@ -1,3 +1,3 @@
-const StaticServer = require("./server");
+const StaticServer = require('./server');
 
 new StaticServer().start();
