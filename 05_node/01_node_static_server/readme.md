@@ -1,4 +1,4 @@
-node 本地服务器，支持缓存、自定义启动端口。
+node 本地服务器
 
 ## 使用
 
@@ -51,3 +51,7 @@ node app -i main.html
 * 缓存相关
 
 设置缓存相关参数，如果测试缓存时可以快速设置，具体可查看 `config/default.json` 默认配置和 `server.js` 配置文件。
+
+## 参考文献
+
+[使用 Node.js 搭建静态资源服务器](https://github.com/sheila1227/FE-blog/issues/1)
