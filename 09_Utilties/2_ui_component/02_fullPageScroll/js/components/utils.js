@@ -1,49 +1,24 @@
 /**
  * 原生 js 语法，DOM 相关
  */
-
 export default {
-  // 获取元素距 document 顶部距离
-  getElementTop(elt) {
-    let actualTop = elt.offsetTop;
-    let currentElt = elt.offsetParent;
-
-    while (currentElt !== null) {
-      actualTop += currentElt.offsetTop;
-      currentElt = currentElt.offsetParent;
-    }
-
-    return actualTop;
-  },
-
-  // 获取元素样式
-  getElementStyle(elt, attr) {
-    let style = window.getComputedStyle(elt, null);
-
-    return style[attr];
-  },
-
   // 删除 类名
   deleteClassName(el, className) {
     if (el.classList.contains(className)) {
       el.classList.remove(className);
     }
   },
-
   // 将伪数组转化为数组
   transferToArray(obj) {
-    let arr = Array.prototype.slice.call(obj);
-    return arr;
+    return Array.prototype.slice.call(obj);
   },
-
   // 截流函数
-  throttle(method, context, event) {
+  throttle(method, context, event, time) {
     clearTimeout(method.tId);
     method.tId = setTimeout(function() {
       method.call(context, event);
-    }, 30);
+    }, time);
   },
-
   // 判断是否是手机浏览器
   isMobile() {
     if (
@@ -68,13 +43,13 @@ export default {
       height: document.documentElement.clientHeight,
     };
   },
-
   /**
    * 兼容事件 begin
    */
   addHandler(element, type, handler) {
     if (element.addEventListener) {
-      this.addHandler = () => element.addEventListener(type, handler, false);
+      // 好奇怪，放到类中如果惰性载入失败
+      element.addEventListener(type, handler, false);
     } else if (element.attachEvent) {
       this.addHandler = () => element.attachEvent(`on${type}`, handler);
     } else {
@@ -93,38 +68,13 @@ export default {
   getEvent(event) {
     return event ? event : window.event;
   },
-  getTarget(event) {
-    return event.target || event.srcElement;
-  },
-  preventDefault(event) {
-    if (event.preventDefault) {
-      event.preventDefault();
-    } else {
-      event.returnValue = false;
-    }
-  },
-  stopPropagation(event) {
-    if (event.stopPropagation) {
-      event.stopPropagation();
-    } else {
-      event.cancelBubble = true;
-    }
-  },
 
   // 鼠标滚轮事件
   getWheelDelta(event) {
     if (event.wheelDelta) {
-      this.getWheelDelta = event => event.wheelDelta;
-
-      // 第一次载入时返回数据
       return event.wheelDelta;
     } else {
-      this.getWheelDelta = event => -event.detail * 40;
       return -event.detail * 40;
     }
   },
-
-  /**
-   * 兼容事件 end
-   */
 };
