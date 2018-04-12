@@ -74,20 +74,20 @@ export default {
    */
   addHandler(element, type, handler) {
     if (element.addEventListener) {
-      element.addEventListener(type, handler, false);
+      this.addHandler = () => element.addEventListener(type, handler, false);
     } else if (element.attachEvent) {
-      element.attachEvent('on' + type, handler);
+      this.addHandler = () => element.attachEvent(`on${type}`, handler);
     } else {
-      element['on' + type] = handler;
+      this.addHandler = () => (element[`on${type}`] = handler);
     }
   },
   removeHandler(element, type, handler) {
     if (element.removeEventListener) {
-      element.removeEventListener(type, handler, false);
+      this.addHandler = () => element.removeEventListener(type, handler, false);
     } else if (element.detachEvent) {
-      element.detachEvent('on' + type, handler);
+      this.addHandler = () => element.detachEvent(`on${type}`, handler);
     } else {
-      element['on' + type] = null;
+      this.addHandler = () => (element[`on${type}`] = null);
     }
   },
   getEvent(event) {
@@ -114,8 +114,12 @@ export default {
   // 鼠标滚轮事件
   getWheelDelta(event) {
     if (event.wheelDelta) {
+      this.getWheelDelta = event => event.wheelDelta;
+
+      // 第一次载入时返回数据
       return event.wheelDelta;
     } else {
+      this.getWheelDelta = event => -event.detail * 40;
       return -event.detail * 40;
     }
   },
