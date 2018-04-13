@@ -10,7 +10,7 @@ export default class FullPage {
     this.navDots = [];
     // 获取当前视图高度
     this.viewHeight = Utils.getViewportDimension().height;
-    // 当前位置
+    // 当前位置，负值表示相对视图窗口顶部向下的偏移量
     this.currentPosition = 0;
     // 截流函数间隔时间，毫秒
     this.throttleTime = 150;
@@ -20,7 +20,7 @@ export default class FullPage {
     this.main.style.top = height + 'px';
   }
   // 随页面滚动改变样式
-  changeNav(height) {
+  changeNavStyle(height) {
     this.navDots.forEach(el => {
       Utils.deleteClassName(el, 'active');
     });
@@ -33,6 +33,7 @@ export default class FullPage {
     const nav = document.createElement('div');
     nav.className = 'nav';
     main.appendChild(nav);
+
     // 有几页，显示几个点
     for (let i = 0; i < this.pagesNum; i++) {
       nav.innerHTML += '<p class="nav-dot"></p>';
@@ -47,62 +48,65 @@ export default class FullPage {
     // 添加点式导航击事件
     this.navDots.forEach((el, i) => {
       Utils.addHandler(el, 'click', () => {
-        this.turnPage(-(i * this.viewHeight));
+        // 页面跳转
+        this.currentPosition = -(i * this.viewHeight);
+        this.turnPage(this.currentPosition);
+
+        // 更改样式
         this.navDots.forEach(el => {
           Utils.deleteClassName(el, 'active');
         });
-
         el.classList.add('active');
       });
     });
   }
-  // 鼠标滑动逻辑
-  scrollMouse(e) {
-    console.log(111);
+  // 鼠标滚动逻辑（全屏滚动关键逻辑）
+  scrollMouse(event) {
+    event = Utils.getEvent(event);
+    let delta = Utils.getWheelDelta(event);
 
-    e = Utils.getEvent(e);
-    let delta = Utils.getWheelDelta(e);
-
-    // 向下滑动
+    // 向下滚动，delta < 表示向下滚动，且只有页面底部还有内容时才能滚动
     if (
       delta < 0 &&
       this.main.offsetTop > -(this.viewHeight * (this.pagesNum - 1))
     ) {
+      // 重新指定当前页面距视图顶部的距离 currentPosition，实现全屏滚动，currentPosition 为负值，越小表示超出顶部部分越多
       this.currentPosition = this.currentPosition - this.viewHeight;
 
-      // 避免向下滑动超出边界
+      // 当 currentPosition =  -(this.viewHeight * (this.pagesNum - 1) 时，表示最后一个页面的顶部与视图顶部处在相同位置
+      // 此时不允许继续向上滚动
       if (this.currentPosition < -(this.viewHeight * (this.pagesNum - 1))) {
         this.currentPosition = -(this.viewHeight * (this.pagesNum - 1));
       }
 
       this.turnPage(this.currentPosition);
-      this.changeNav(this.currentPosition);
+      this.changeNavStyle(this.currentPosition);
     }
 
-    // 向上滑动
+    // 向上滚动，delta > 0，且页面顶部还有内容时才能滚动
     if (delta > 0 && this.main.offsetTop < 0) {
+      // 重新指定当前页面距视图顶部的距离 currentPosition，实现全屏滚动，currentPosition 为负值，越大表示超出顶部部分越少
       this.currentPosition = this.currentPosition + this.viewHeight;
 
-      // 避免向上滑动超出边界
+      // 当 currentPosition = 0 时，表示第一个页面的顶部与视图顶部处在相同位置，此时不允许继续向上滚动
       if (this.currentPosition > 0) {
         this.currentPosition = 0;
       }
 
       this.turnPage(this.currentPosition);
-      this.changeNav(this.currentPosition);
+      this.changeNavStyle(this.currentPosition);
     }
   }
-  // 设置截流函数
-  handleMouseWheel(e) {
-    // 还是 this 指向啊！
-    Utils.throttle(this.scrollMouse, this, e, this.throttleTime);
+  // 设置截流函数，注意绑定 this
+  handleMouseWheel(event) {
+    Utils.throttle(this.scrollMouse, this, event, this.throttleTime);
   }
   // 初始化函数
   _init() {
     // 创建点式导航
     this.createNav();
 
-    // 鼠标滚轮监听
+    // 鼠标滚轮监听，注意绑定 this
     Utils.addHandler(document, 'mousewheel', this.handleMouseWheel.bind(this));
     Utils.addHandler(
       document,
