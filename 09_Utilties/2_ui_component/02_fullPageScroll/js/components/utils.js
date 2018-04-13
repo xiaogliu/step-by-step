@@ -19,17 +19,6 @@ export default {
       method.call(context, event);
     }, time);
   },
-  // 判断是否是手机浏览器
-  isMobile() {
-    if (
-      navigator.userAgent.match(
-        /Android|iPhone|iPad|iPod|BlackBerry|Opera Mini|IEMobile|Windows Phone/i,
-      )
-    ) {
-      return true;
-    }
-    return false;
-  },
   // 获取 viewport 尺寸
   getViewportDimension() {
     if (document.compatMode === 'BackCompat') {
@@ -51,18 +40,18 @@ export default {
       // 好奇怪，放到类中如果惰性载入失败
       element.addEventListener(type, handler, false);
     } else if (element.attachEvent) {
-      this.addHandler = () => element.attachEvent(`on${type}`, handler);
+      element.attachEvent(`on${type}`, handler);
     } else {
-      this.addHandler = () => (element[`on${type}`] = handler);
+      element[`on${type}`] = handler;
     }
   },
   removeHandler(element, type, handler) {
     if (element.removeEventListener) {
-      this.addHandler = () => element.removeEventListener(type, handler, false);
+      element.removeEventListener(type, handler, false);
     } else if (element.detachEvent) {
-      this.addHandler = () => element.detachEvent(`on${type}`, handler);
+      element.detachEvent(`on${type}`, handler);
     } else {
-      this.addHandler = () => (element[`on${type}`] = null);
+      element[`on${type}`] = null;
     }
   },
   getEvent(event) {
