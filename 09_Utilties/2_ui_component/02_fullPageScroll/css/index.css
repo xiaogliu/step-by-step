@@ -3,16 +3,16 @@
   margin: 0;
 }
 
-#wrap {
+body {
   width: 100%;
   height: 100vh;
   overflow: hidden;
 }
 
-#main {
+#pureFullPage {
   position: relative;
   top: 0;
-  transition: all 500ms ease;
+  transition: all 500ms;
 }
 
 .page {
@@ -20,19 +20,16 @@
   height: 100vh;
 }
 
-.page1 {
-  background: url('https://static-https.lansheng8.com/yg-index1.jpg') no-repeat
-    center/cover;
+.page:nth-child(1) {
+  background: red no-repeat center/cover;
 }
 
-.page2 {
-  background: url('https://static-https.lansheng8.com/yg-index2.jpg') no-repeat
-    center/cover;
+.page:nth-child(2) {
+  background: green no-repeat center/cover;
 }
 
-.page3 {
-  background: url('https://static-https.lansheng8.com/yg-index3.jpg') no-repeat
-    center/cover;
+.page:nth-child(3) {
+  background: blue no-repeat center/cover;
 }
 
 .nav {

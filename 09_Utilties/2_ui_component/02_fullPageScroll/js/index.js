@@ -1,3 +1,3 @@
-import FullPage from './components/fullPage.js';
+import PureFullPage from './components/pureFullPage.js';
 
-new FullPage('#main')._init();
+new PureFullPage('#pureFullPage')._init();

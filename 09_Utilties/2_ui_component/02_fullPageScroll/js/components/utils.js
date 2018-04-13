@@ -91,7 +91,6 @@ export default {
       return window.event;
     }
   },
-
   // 鼠标滚轮事件
   getWheelDelta(event) {
     if (event.wheelDelta) {

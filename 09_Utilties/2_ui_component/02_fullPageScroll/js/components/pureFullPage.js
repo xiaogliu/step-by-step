@@ -32,7 +32,7 @@ export default class FullPage {
   createNav() {
     const nav = document.createElement('div');
     nav.className = 'nav';
-    main.appendChild(nav);
+    this.main.appendChild(nav);
 
     // 有几页，显示几个点
     for (let i = 0; i < this.pagesNum; i++) {
