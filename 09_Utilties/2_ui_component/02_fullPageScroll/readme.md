@@ -59,9 +59,10 @@ new PureFullPage('#pureFullPage')._init();
 
 1.  详细介绍文章；
 2.  更多参数配置；
-3.  npm package；
-4.  英文版说明；
-5.  手机支持（主要是触屏事件）。
+3.  浏览器兼容（不然 utils 没意义了）；
+4.  npm package；
+5.  手机支持（主要是触屏事件）;
+6.  英文版说明。
 
 ## 参考资料
 
