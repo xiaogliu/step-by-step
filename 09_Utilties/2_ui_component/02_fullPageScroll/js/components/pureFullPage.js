@@ -36,7 +36,7 @@ export default class FullPage {
 
     // 有几页，显示几个点
     for (let i = 0; i < this.pagesNum; i++) {
-      nav.innerHTML += '<p class="nav-dot"></p>';
+      nav.innerHTML += '<p class="nav-dot"><span></span></p>';
     }
 
     const navDots = document.querySelectorAll('.nav-dot');
