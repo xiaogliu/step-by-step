@@ -2,7 +2,7 @@
 
 ## 前面的话
 
-现在已经有很多全屏滚动插件了，比如著名的 [fullPage](https://github.com/alvarotrigo/fullPage.js)，那问什么还要自己造轮子呢？
+现在已经有很多全屏滚动插件了，比如著名的 [fullPage](https://github.com/alvarotrigo/fullPage.js)，那为什么还要自己造轮子呢？
 
 首先，现有轮子有以下问题：
 

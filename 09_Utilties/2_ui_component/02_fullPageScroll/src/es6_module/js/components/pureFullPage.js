@@ -1,6 +1,6 @@
 import Utils from './utils.js';
 
-export default class FullPage {
+export default class PureFullPage {
   constructor(el) {
     // 获取翻页容器
     this.main = document.querySelector(el);
@@ -102,7 +102,7 @@ export default class FullPage {
     Utils.throttle(this.scrollMouse, this, event, this.throttleTime);
   }
   // 初始化函数
-  _init() {
+  init() {
     // 创建点式导航
     this.createNav();
 
