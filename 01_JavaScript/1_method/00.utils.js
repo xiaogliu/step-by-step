@@ -151,4 +151,15 @@ export default {
       height: document.documentElement.clientHeight,
     };
   },
+  // 判断是否是手机浏览器
+  isMobile() {
+    if (
+      navigator.userAgent.match(
+        /Android|iPhone|iPad|iPod|BlackBerry|Opera Mini|IEMobile|Windows Phone/i,
+      )
+    ) {
+      return true;
+    }
+    return false;
+  },
 };
