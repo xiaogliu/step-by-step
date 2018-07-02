@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div style="width: 200px; background-color: red">
+    <button>btn</button>
+  </div>
+  <script>
+    window.onload = () => {
+      const body = document.querySelector('body');
+
+      for (let i = 1; i <= 10; i++) {
+        const a = document.createElement('a');
+        a.innerHTML = i;
+        a.setAttribute('href', 'www.google.com');
+
+        // 修改样式，便于查看
+        a.style.display = 'block';
+        a.style.margin = '10px 0';
+        a.style.width = '200px';
+        a.style.backgroundColor = 'red';
+
+        // 插入 DOM
+        body.appendChild(a);
+      }
+
+      // 事件被委托在 body 上
+      body.addEventListener('click', (e) => {
+        let target = e.target;
+
+        // 如果 btn 沾满 div，那么怎么在div上加事件（不能直接点div了，因为被btn覆盖了）？
+        // 这里可以优化为 div 直接父元素，此处恰好是 body
+        while (target !== body) {
+          if (target.nodeName.toLowerCase() === 'div') {
+            console.log('i am div');
+            // break 退出循环
+            break;
+          }
+
+          target = target.parentNode;
+        }
+
+        // console.log(e.target, e.currentTarget);
+        // 通过 e.target 当前指向，截获事件
+        if (target.nodeName.toLowerCase() === 'a') {
+          e.preventDefault();
+          console.log(target.innerHTML);
+        }
+      });
+    }
+  </script>
+</body>
+</html>

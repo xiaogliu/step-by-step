@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div style="width: 200px; background-color: red;">
+    <button>click me</button>
+  </div>
+  <script>
+    const div = document.querySelector('div');
+    const btn = document.querySelector('button');
+
+    // 冒泡阶段注册事件
+    div.addEventListener('click', (e) => {
+      console.log('target:', e.target, 'currentTarget:', e.currentTarget);
+      alert('i am div bubble');
+    }, false);
+    btn.addEventListener('click', (e) => {
+      console.log('target:', e.target, 'currentTarget:', e.currentTarget);
+      alert('i am btn bubble');
+    }, false);
+
+    // 捕获阶段注册事件
+    div.addEventListener('click', (e) => {
+      console.log('target:', e.target, 'currentTarget:', e.currentTarget);
+      alert('i am div capture');
+    }, true);
+    btn.addEventListener('click', (e) => {
+      console.log('target:', e.target, 'currentTarget:', e.currentTarget);
+      alert('i am btn capture');
+    }, true);
+
+    // 验证从哪开始
+    document.addEventListener('click', (e) => {
+      console.log('target:', e.target, 'currentTarget:', e.currentTarget);
+      alert('i am document capture');
+    }, true);
+    document.querySelector('body').addEventListener('click', (e) => {
+      console.log('target:', e.target, 'currentTarget:', e.currentTarget);
+      alert('i am body capture');
+    }, true);
+    window.addEventListener('click', (e) => {
+      console.log('target:', e.target, 'currentTarget:', e.currentTarget);
+      alert('i am window capture');
+    }, true);
+  </script>
+</body>
+</html>
