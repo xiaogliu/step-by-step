@@ -69,7 +69,7 @@ export default {
     if (num) {
       return (num * 100).toFixed(1);
     }
-    return '--';
+    return "--";
   },
   /**
    * 格式化金额
@@ -78,7 +78,7 @@ export default {
   formatCent(cent) {
     if (Number(cent) || Number(cent) === 0) {
       const yuan = (cent / 100).toFixed(2);
-      let intPart = yuan.split('.')[0];
+      let intPart = yuan.split(".")[0];
       const len = intPart.length;
       let mod = len % 3;
       const group = len / 3;
@@ -92,11 +92,11 @@ export default {
         const end = begin + 3;
         intPartArray.push(intPart.slice(begin, end));
       }
-      intPart = intPartArray.join(',');
-      return `${intPart}.${yuan.split('.')[1]}`;
+      intPart = intPartArray.join(",");
+      return `${intPart}.${yuan.split(".")[1]}`;
     }
     // 初始化时显示 '--'
-    return '--';
+    return "--";
   },
   /**
    * 转换时间时间戳
@@ -120,7 +120,7 @@ export default {
       const hour = formatNumber(d.getHours());
       const minute = formatNumber(d.getMinutes());
       const seconds = formatNumber(d.getSeconds());
-      let s = '';
+      let s = "";
       if (supreme) {
         // 带有时分秒
         s = `${year}-${month}-${date} ${hour}:${minute}:${seconds}`;
@@ -133,33 +133,55 @@ export default {
       }
       return s;
     }
-    return '--';
+    return "--";
   },
 
   /**
    * 获取视图宽高，更好的兼容性
    */
   getViewport() {
-    if (document.compatMode === 'BackCompat') {
+    if (document.compatMode === "BackCompat") {
       return {
         width: document.body.clientWidth,
-        height: document.body.clientHeight,
+        height: document.body.clientHeight
       };
     }
     return {
       width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight,
+      height: document.documentElement.clientHeight
     };
   },
   // 判断是否是手机浏览器
   isMobile() {
     if (
       navigator.userAgent.match(
-        /Android|iPhone|iPad|iPod|BlackBerry|Opera Mini|IEMobile|Windows Phone/i,
+        /Android|iPhone|iPad|iPod|BlackBerry|Opera Mini|IEMobile|Windows Phone/i
       )
     ) {
       return true;
     }
     return false;
   },
+  // 截流函数，method 回调函数，context 上下文，delay 延迟函数，
+  throttle(method, context, delay) {
+    let wait = false;
+    return function(...args) {
+      if (!wait) {
+        method.apply(context, args);
+        wait = true;
+        setTimeout(() => {
+          wait = false;
+        }, delay);
+      }
+    };
+  },
+  // 防抖动函数，method 回调函数，context 上下文，event 传入的时间，delay 延迟函数
+  debounce(method, context, event, delay) {
+    if (method.tId) {
+      clearTimeout();
+    }
+    method.tId = setTimeout(() => {
+      method.call(context, event);
+    }, delay);
+  }
 };
