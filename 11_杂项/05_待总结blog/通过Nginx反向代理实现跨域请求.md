@@ -71,7 +71,7 @@ http
   const xhr = new XMLHttpRequest();
 
   // 这里的远程服务器地址写 Nginx 监听的地址，Nginx 自动做转发
-  xhr.open('GET', 'http://127.0.0.1:9999/v2/book/6548683');
+  xhr.open('GET', 'https://api.douban.com/v2/book/6548683');
   xhr.onload = function() {
     if (xhr.status === 200) {
       console.log(xhr.responseText);

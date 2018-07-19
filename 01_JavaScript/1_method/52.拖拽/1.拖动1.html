@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      width: 100vw;
+      height: 100vh;
+    }
+
+    div {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="draggable">
+  </div>
+  <script>
+    const body = document.querySelector('body');
+    let [dragging, diffX, diffY] = [null, 0, 0]
+
+    body.addEventListener('mousedown', ev => {
+      // className 既能获取也能设置
+      if (ev.target.className.indexOf('draggable') > -1) {
+        dragging = ev.target;
+        diffX = ev.clientX - dragging.offsetLeft;
+        diffY = ev.clientY - dragging.offsetTop;
+      }
+    });
+    body.addEventListener('mousemove', ev => {
+      if (dragging) {
+        dragging.style.left = `${ev.clientX - diffX}px`;
+        dragging.style.top = `${ev.clientY - diffY}px`;
+      }
+    });
+    body.addEventListener('mouseup', ev => {
+      dragging = null;
+    });
+
+
+  </script>
+</body>
+
+</html>

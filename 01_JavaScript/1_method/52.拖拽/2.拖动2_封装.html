@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      width: 100vw;
+      height: 100vh;
+    }
+
+    div {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="draggable">
+  </div>
+  <script>
+    const dragFn = function() {
+      let [dragging, diffX, diffY] = [null, 0, 0]
+      let getOffset = function (el, dir) {
+        let computedDir = el[dir];
+        let current = el.offsetParent;
+
+        while (current !== null) {
+          computedDir += current[dir];
+          current = current.offsetParent;
+        }
+
+        return computedDir;
+      }
+
+      const handleEvent = ev => {
+        switch (event.type) {
+          case 'mousedown':
+            if (ev.target.className.indexOf('draggable') > -1) {
+              dragging = ev.target;
+              diffX = ev.clientX - getOffset(dragging, 'offsetLeft');
+              diffY = ev.clientY - getOffset(dragging, 'offsetTop');
+            }
+            break;
+          case 'mousemove':
+            if (dragging) {
+              dragging.style.left = `${ev.clientX - diffX}px`;
+              dragging.style.top = `${ev.clientY - diffY}px`;
+            }
+            break;
+          case 'mouseup':
+            dragging = null;
+            break;
+          default:
+            break;
+        }
+      }
+
+      return {
+        enable: function() {
+          document.addEventListener('mousedown', handleEvent);
+          document.addEventListener('mousemove', handleEvent);
+          document.addEventListener('mouseup', handleEvent);
+        },
+      }
+    }
+    
+    dragFn().enable();
+  </script>
+</body>
+
+</html>
