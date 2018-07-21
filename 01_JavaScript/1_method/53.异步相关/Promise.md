@@ -16,13 +16,13 @@ Promise 实例可以想像成一个占位符，当获取到异步数据后，更
 
 ## 1.2 基本用法
 
-基本用法包含 promise 创建、获取 promise 处理的数据以及错误捕获，他们三者结合使用才算完成了一次 promise 的完整使用过程。
+基本用法包含 promise 创建、获取 promise 完成后返回数据以及错误捕获，他们三者结合使用才算完成了一次 promise 的完整使用过程。
 
 ### 1.2.1 创建 promise 实例及 executor 函数
 
 通过内建对象`Promise`（promise 的构造函数）创建 promise 实例，其中，`Promise`接收一个函数作为参数，这个函数称之为 executor 函数。
 
-Executor 函数本身接收两个函数作为参数，通常命名为`resolve`和`reject`。它们接收一个值作为参数，作为 promise 完成之后的值传给 promise 实例的内部属性`[[PromiseValue]]]`。它们当中只能有一个执行，执行之后表示当前 promise 已完成（当然，分别表示两个不同的已完成状态，成功或失败）。
+Executor 函数本身接收两个函数作为参数，通常命名为`resolve`和`reject`。它们接收一个值作为参数，作为 promise 完成之后的值传给 promise 实例的内部属性`[[PromiseValue]]]`。它们当中只能有一个执行，执行之后表示当前 promise 已完成（当然，分别表示两个不同的已完成状态，兑现或拒绝）。
 
 > 实际开发中我们会把期待得到的数据传给`resolve`函数，把错误信息传给`reject`函数。
 
@@ -54,16 +54,19 @@ console.log(555);
 
 1.  `executor`函数立即执行，所以`111`先打印出来；
 2.  `resolve`此时也立即执行，为了体现这一点，给其传入了立即执行函数，直接打印出了`222`。实际上此时 promise 已经完成，但我们还无法访问完成后的 promise，需要配合下文讨论的`then()`访问；
-3.  紧接着是后面代码执行，打印`444`接着打印；
+3.  紧接着是后面代码执行，打印`444`；
 4.  最后打印`555`。
 
-虽然一直在讨论`resolve`，`reject`执行时步骤同`resolve`，不单独讨论。
+> 虽然一直在讨论`resolve`，`reject`执行时步骤同`resolve`，不单独讨论。
 
-到目前为止，我们看到的都是同步代码，那 promise 和异步有什么关系呢？实际使用中，`resolve`或`reject`函数一般是放在异步执行的代码中，相比回调函数，配合`then()`方法可以更方便的处理异步数据及异常，尤其在处理有依赖关系的异步数据时优势会体现的更加明显。下文会在例子中体现这点。
+到目前为止，我们看到的都是同步代码，那 promise 和异步有什么关系呢？
+
+实际使用中，`resolve`会将 promise 完成后的数据传给`then()`方法，而`then()`中的代码是放在微任务中异步执行的，这是其一；
+第二点是，`resolve`往往不是立即执行，比如请求服务器上的数据，数据请求完成后再执行`resolve`，这个时候，`resolve`本身也是异步执行的。
 
 ### 1.2.2 then() 方法
 
-promise 实例拥有`then()`方法，它设计的目的是 **异步获取** promise 完成后我们需要的数据，也正因如此，才将 promise 归为异步处理数据的一种方式。
+promise 实例拥有`then()`方法，它设计的目的是 **异步获取** promise **完成后** 的数据。
 
 `then()`方法可接受两个函数作为参数，当 promise 完成后会执行它们：
 
@@ -146,7 +149,9 @@ Promise 整个生命周期状态可分为两个部分：未完成状态和已完
 
 ![promise state](http://ol9ge41ud.bkt.clouddn.com/promise_state.png)
 
-> 因为已完成状态称为 “resolved states”，后面将要介绍的 `[[PromiseStatus]]`也有 `resolved`状态值。从生命周期的角度看，如果用英文描述，则 resolved states 包括 `resolved`和 `rejected`两种  情况。
+_图拍引自 Secrets of the JavaScript Ninja(2nd)_
+
+> 英文已完成状态称为 “resolved states”，后面将要介绍的 `[[PromiseStatus]]`也有 `resolved`状态值。从生命周期的角度看，如果用英文描述，则 resolved states 包括 `resolved`和 `rejected`两种情况。
 
 另外，**promise 一般完成，状态就不能改变**。
 
@@ -217,7 +222,7 @@ p {
 
 > 这里没有捕获错误，所以会报错 `Uncaught (in promise) 111`，不过，此处不是我们关注的重点
 
-## 2.3 关于  rejected 状态
+## 2.3 关于rejected 状态
 
 两种情况可能导致 promise 进入 rejected 状态：
 
@@ -357,7 +362,7 @@ promiseAjax("URL1")
 
 Promise 还有两个常用功能`promise.all()`和 `promise.race`，它们都用于一次处理多个 promise，不同点是：`promise.all()`可以一次处理多个 promise，我们 **不需要关心哪个先完成，全部兑现后后统一返回，但任何一个 promise 被拒绝都会导致整个 promise 被拒绝**；使用 `promise.race()`时我们也 **不需要关心执行顺序，但任何一个 promise 完成就会立即返回这个完成的 promise**。
 
-它们的不同点主要体现在 promise  兑现后传递给 `then()`的数据：`promise.all()`返回的是**所有** promise 兑现后组成的数组数据，而`promise.race()`返回的是 **最先完成的那一个** promise 返回的数据。见下面的代码例子：
+它们的不同点主要体现在 promise兑现后传递给 `then()`的数据：`promise.all()`返回的是**所有** promise 兑现后组成的数组数据，而`promise.race()`返回的是 **最先完成的那一个** promise 返回的数据。见下面的代码例子：
 
 - `promise.all()`
 
@@ -385,19 +390,19 @@ promiseAjax("URL1")
 }).catch(e => console.log(e));
 ```
 
-# 4）promise 的实现
+# 4）promise 的实现
 
 限于篇幅，将在另一篇文章中专门写 promise 的源码实现。
 
-> 网上有很多类似文章了，自己写一遍加深印象。
+> 网上有很多类似文章了，自己写一遍加深印象。
 
 # 5）其他说明
 
-相比使用回调函数，promise 已经使代码得到了很大改善， 但相比同步代码还是看着有些  复杂，比如，链式调用那部分，代码看上去还是有些混乱。
+相比使用回调函数，promise 已经使代码得到了很大改善， 但相比同步代码还是看着有些复杂，比如，链式调用那部分，代码看上去还是有些混乱。
 
 **那能不能用写同步代码的方式请求异步数据呢**？可以的，这就是第三部分将要介绍的 async-await。
 
-那是不是说 promise 就  没用了呢？并不是，async-wait 实际是生成器 + promise 的语法糖，只有理解了生成器和 promise 的原理，才能更好的理解 async-await。
+那是不是说 promise 就没用了呢？并不是，async-wait 实际是生成器 + promise 的语法糖，只有理解了生成器和 promise 的原理，才能更好的理解 async-await。
 
 # 附录
 
@@ -483,3 +488,7 @@ console.log("12"); // 1，5，10，12，等待2
  * 即：1，5，10，12，11，2, 3, 4, 5, 9, 6
  */
 ```
+
+# 参考资料
+
+《Secrets of the JavaScript Ninja(2nd)》 第 6 章 promise 部分
