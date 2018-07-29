@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 100%;
+      /* min-height: 100vh; */
+      height: 200px;
+      margin: 20px 0;
+    }
+
+    /* flex */
+    .flex {
+      display: flex;
+    }
+    .flex .left,
+    .flex .right {
+      width: 200px;
+      background-color: green;
+    }
+    .flex .middle {
+      flex: 1;
+      background-color: red;
+    }
+
+    /* float */
+    .float .left,
+    .float .right,
+    .float .middle {
+      height: 100%;
+    }
+    .float .left,
+    .float .right {
+      width: 200px;
+      background-color: green;
+    }
+    .float .left {
+      float: left;
+    }
+    .float .right {
+      float: right;
+    }
+    .float .middle {
+      /* 为了设置 padding 啥的 */
+      margin: 0 200px;
+      background-color: red;
+    }
+
+    /* grid 貌似最简单的布局了 */
+    .grid {
+      display: grid;
+      grid-template-columns: 200px 1fr 200px;
+    }
+    .grid .left,
+    .grid .right {
+      background: green;
+    }
+    .grid .middle {
+      background-color: red;
+    }
+
+    /* position 不推荐*/
+    .position {
+      /* 要给 position 设置属性啊 */
+      position: relative;
+    }
+    .position .left,
+    .position .right {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: green;
+    }
+    .position .right {
+      /* 只给right 设置就好 */
+      top: 0;
+      right: 0;
+    }
+    .position .middle {
+      margin: 0 200px;
+      background: red;
+      height: 200px;
+    }
+    
+    .table {
+      display: table;
+      height: 200px;
+    }
+    .table div {
+      display: table-cell;
+    }
+    .table .left,
+    .table .right {
+      width: 200px;
+      background-color: green;
+    }
+    .table .middle {
+      background: red;
+    }
+  </style>
+</head>
+<body>
+  <!-- flexible -->
+  <section class="container flex">
+    <div class="left"></div>
+    <div class="middle">flexible，高度自动撑起？</div>
+    <div class="right"></div>
+  </section>
+
+  <!-- float -->
+  <section class="container float">
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="middle">float：什么时候子元素高度和父元素绑定？</div>
+  </section>
+
+  <!-- float -->
+  <section class="container grid">
+    <div class="left"></div>
+    <div class="middle">grid，高度自动撑起</div>
+    <div class="right"></div>
+  </section>
+
+  <!-- position -->
+  <section class="container position">
+    <div class="left"></div>
+    <div class="middle">position: 需要设置高度</div>
+    <div class="right"></div>
+  </section>
+
+  <!-- table -->
+  <section class="container table">
+    <div class="left"></div>
+    <div class="middle">table</div>
+    <div class="right"></div>
+  </section>
+</body>
+</html>

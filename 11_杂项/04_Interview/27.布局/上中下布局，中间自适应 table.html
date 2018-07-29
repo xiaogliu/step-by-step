@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .container {
+      width: 100%;
+      min-height: 100vh;
+      display: table;
+    }
+    .container div {
+      width: 100%;
+      display: table-row;
+      display: inline-block; 
+    }
+
+    .container .left,
+    .container .right {
+      height: 200px;
+      background-color: green;
+    }
+    .container .middle {
+      background-color: red;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left"></div>
+    <div class="middle"></div>
+    <div class="right"></div>
+  </div>
+</body>
+</html>

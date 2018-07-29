@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .container {
+      border: 1px solid red;
+      margin: 20px;
+    }
+
+    .vw {
+      width: 50vw;
+      height: 37.5vw;
+    }
+
+    .div2 {
+      width: 50%;
+      /*如果此处没有宽度为body的50%的要求，则可以不要此div，直接相对body即可*/
+    }
+
+    .div1 {
+      position: relative;
+      width: 100%;
+      padding-top: 75%;
+      border: 1px solid red;
+    }
+
+    p {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="container vw">
+    <div class="items">viewport width</div>
+  </section>
+  <div class="div2">
+    <div class="div1">
+      <p>谁是世界上最美的女人</p>
+    </div>
+  </div>
+</body>
+
+</html>

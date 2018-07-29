@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .container {
+      position: relative;
+      min-height: 100vh;
+    }
+
+    .container .left,
+    .container .right {
+      position: absolute;
+      background-color: green;
+    }
+
+    .container .left,
+    .container .right {
+      width: 100%;
+      height: 200px;
+      position: absolute;
+      background-color: green;
+    }
+
+    .container .right {
+      bottom: 0;
+    }
+
+    .container .middle {
+      position: absolute;
+      width: 100%;
+      top: 200px;
+      bottom: 200px;
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left"></div>
+    <div class="middle">qwqwqwqw</div>
+    <div class="right"></div>
+  </div>
+</body>
+</html>
