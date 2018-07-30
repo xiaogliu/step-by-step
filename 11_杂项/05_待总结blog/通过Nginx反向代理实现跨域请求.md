@@ -59,12 +59,20 @@ http
     {
       # 远程服务器地址（访问 api 获取信息）
       proxy_pass https://api.douban.com;
+      # 把cookie中的path部分从/api替换成/service
+      # proxy_cookie_path /api /service;
+      # 把cookie的path部分从localhost:8080替换成your.domain.name
+      # proxy_cookie_domain localhost:8080 your.domain.name
     }
   }
 }
 ```
 
+cookie 相关的在榄盛项目中没有设置，因为服务器没有指定 domain，所以默认就是发送端服务器的域名，路径是 `/`，而 nginx 作为代理服务器的地址是 `127.0.0.1`，cookie 也就都设置到这里了。如果，服务器设置 cookie 的 domain 和 path 了，要对应调整。比如：
 
+```bash
+proxy_cookie_domain server.com nginx_proxy.com
+```
 
 ```js
 <script>
