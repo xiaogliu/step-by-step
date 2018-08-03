@@ -31,6 +31,7 @@
     body.addEventListener('mousedown', ev => {
       // className 既能获取也能设置
       if (ev.target.className.indexOf('draggable') > -1) {
+        console.log(ev.target, ev.currentTarget);
         dragging = ev.target;
         diffX = ev.clientX - dragging.offsetLeft;
         diffY = ev.clientY - dragging.offsetTop;
@@ -45,8 +46,6 @@
     body.addEventListener('mouseup', ev => {
       dragging = null;
     });
-
-
   </script>
 </body>
 
