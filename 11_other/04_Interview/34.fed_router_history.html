@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 开一个本地服务器，主机端口按需更改 -->
+  <a href="./" onclick="go('/'); return false">首页</a>
+  <a href="./page1" onclick="go('page1'); return false">page1</a>
+  <a href="./page2" onclick="go('page2'); return false">page2</a>
+  <p>home</p>
+  <script>
+    // p 模拟但页面的组件视图
+    let p = document.querySelector('p');
+
+    let url;
+
+
+    function setPage(url) {
+      // 模拟路由转发
+      switch (url) {
+        case 'page1':
+          p.innerHTML = 'page1';
+          break;
+        case 'page2':
+          p.innerHTML = 'page2';
+          break;
+        default:
+          p.innerHTML = 'home';
+      }
+    }
+
+    function go(page) {
+      setPage(page);
+      history.pushState({
+        // state 可以将状态保存在历史栈的 state 对象中
+        // 当手动触发浏览器前进后退按钮时
+        // 触发 popstate 事件，得到正确的前进后退页面
+        from: page,
+      }, null, page);
+    }
+
+    // 通过改变 hash 实现视图更新（页面跳转）但浏览器不会刷新
+    window.addEventListener('popstate', ev => {
+      console.log(111);
+
+      // 获取当前 url 
+      url = ev.state ? ev.state.from : '/';
+
+      setPage(url);
+    })
+  </script>
+</body>
+
+</html>
