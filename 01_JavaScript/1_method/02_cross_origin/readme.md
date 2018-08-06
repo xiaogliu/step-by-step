@@ -37,7 +37,13 @@ CORS 背后的基本思想，就是使用自定义的 HTTP 头部让浏览器与
 
 Origin:http://localhost:3000   
 
-**使用CORS方法主要工作** 在后端，需要后端同学在服务器响应头部添加 `Access-Control-Allow-Origin` 字段，该值要与请求头中Origin一致才能生效，否则跨域失败
+**使用CORS方法主要工作** 在后端，需要后端同学在服务器响应头部添加 `Access-Control-Allow-Origin` 字段，该值要与请求头中Origin一致才能生效（如果不考虑凭证，也可以设置为`*`，不推荐），否则跨域失败
+
+如果需要传递凭证，比如上传 cookie 等，还需要在后段设置：
+
+```
+Access-Control-Allow-Credentials: true,
+```
 
 **优点**
 
@@ -48,6 +54,7 @@ Origin:http://localhost:3000
 **缺点**
 
 - 兼容性：仅支持IE10以上
+- 如果是复杂请求，需要多发预检请求，即 options
 
 **应用场景**
 
