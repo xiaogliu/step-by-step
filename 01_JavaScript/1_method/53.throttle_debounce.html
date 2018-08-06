@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>截流/防抖</title>
+</head>
+
+<body>
+  <button onclick="tHandler()">click</button>
+  <script>
+    /**
+     * 截流 throttle，类比 bind，返回一个函数
+     */
+    const throttle = (fn, context = null, delay = 1000) => {
+      let wait = false;
+      return () => {
+        if (!wait) {
+          fn.call(context);
+          wait = true;
+          setTimeout(() => {
+            wait = false;
+          }, delay);
+        }
+      };
+    };
+
+    // 点击按钮事件处理器
+    // 不能使用箭头函数，避免 this 无法更改
+    const handler1 = function() {
+      console.log('throttle:', 111);
+    };
+
+    // 截流处理的函数
+    const tHandler = throttle(handler1);
+
+    // 窗口变化测试，截流
+    window.addEventListener('resize', tHandler);
+
+    /**
+     * 防抖，debounce，类比 call/apply，直接执行函数
+     */
+    const debounce = (fn, context = null, delay = 1000) => {
+      if (fn.id) {
+        clearTimeout(fn.id);
+      }
+
+      fn.id = setTimeout(() => {
+        fn.call(context);
+      }, delay);
+    };
+
+    const handler2 = function() {
+      console.log('debounce:', 222);
+    };
+
+    // 窗口变化测试，防抖
+    window.addEventListener('resize', () => {
+      debounce(handler2);
+    });
+  </script>
+</body>
+
+</html>
