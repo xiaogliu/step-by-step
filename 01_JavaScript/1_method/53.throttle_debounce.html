@@ -9,7 +9,8 @@
 </head>
 
 <body>
-  <button onclick="tHandler()">click</button>
+  <!-- 这里写的是一个函数带有执行的，不是定义 -->
+  <button onclick="handler1()">click</button>
   <script>
     /**
      * 截流 throttle，类比 bind，返回一个函数
@@ -29,37 +30,47 @@
 
     // 点击按钮事件处理器
     // 不能使用箭头函数，避免 this 无法更改
-    const handler1 = function() {
+    let handler1 = function() {
       console.log('throttle:', 111);
     };
 
     // 截流处理的函数
-    const tHandler = throttle(handler1);
+    handler1 = throttle(handler1);
 
     // 窗口变化测试，截流
-    window.addEventListener('resize', tHandler);
+    window.addEventListener('resize', handler1);
 
     /**
      * 防抖，debounce，类比 call/apply，直接执行函数
      */
-    const debounce = (fn, context = null, delay = 1000) => {
-      if (fn.id) {
-        clearTimeout(fn.id);
+    // const debounce = (fn, context = null, delay = 1000) => {
+    //   if (fn.id) {
+    //     clearTimeout(fn.id);
+    //   }
+
+    //   fn.id = setTimeout(() => {
+    //     fn.call(context);
+    //   }, delay);
+    // };
+    // 改为 返回函数的形式，和 throttle 一致
+    const debounce = (fn, context = null, delay= 1000) => {
+      let wait;
+      return function () {
+        clearTimeout(wait);
+        wait = setTimeout(function() {
+          fn.apply(context)
+        }, delay)
       }
+    }
 
-      fn.id = setTimeout(() => {
-        fn.call(context);
-      }, delay);
-    };
-
-    const handler2 = function() {
+    let handler2 = function() {
       console.log('debounce:', 222);
     };
 
+    handler2 = debounce(handler2);
+
     // 窗口变化测试，防抖
-    window.addEventListener('resize', () => {
-      debounce(handler2);
-    });
+    window.addEventListener('resize', handler2);
   </script>
 </body>
 
