@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        window.onload = function() {
+            const total = 1000000;
+            const division = 100;
+            const chunkSize = total / division;
+            let count = 0;
+            
+            // 虽然渲染多次，但不至于卡死
+            // 浏览器为了保证渲染流畅，期望每秒渲染 60 帧，
+            // 1 帧时间 1/60 = 0.016s
+            // 即一次事件循环最好在 16 ms 内完成
+            // 不然，就分多次渲染
+            setTimeout(function g() {
+                const ul = document.createElement('ul');
+
+                for (let i = 0; i < chunkSize; i++) {
+                    var li = document.createElement('li');
+                    li.innerHTML = i;
+                    ul.appendChild(li);
+                }
+
+                document.querySelector('body').appendChild(ul);
+
+                count += 1;
+                console.log(count);
+
+                if (count < division) {
+                    setTimeout(g, 0);
+                }
+            }, 0)
+        }
+    </script>
+</body>
+</html>
