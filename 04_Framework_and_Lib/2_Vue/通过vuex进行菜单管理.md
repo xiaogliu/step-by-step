@@ -61,7 +61,7 @@ menuClicked (event, url) {
 
 ## 在 vuex 分配 `state` 和 `mutations`  
 
-不同层级的菜单分别占用一个 `state`，至于 `mutations`，本例中不同 `state` 分别对应写了一个 `mutations`，实际工作中为了更大成都减少代码复用，对于 menu 的状态管理可以只写一个 `mutations`，通过传参判断是更改哪个层级及对应的 menu。
+不同层级的菜单分别占用一个 `state`，至于 `mutations`，本例中不同 `state` 分别对应写了一个 `mutations`，实际工作中为了更大程度减少代码复用，对于 menu 的状态管理可以只写一个 `mutations`，通过传参判断是更改哪个层级及对应的 menu。
 
 ```js
 const store = new Vuex.Store({
