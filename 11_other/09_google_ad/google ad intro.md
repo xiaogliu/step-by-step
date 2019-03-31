@@ -9,3 +9,5 @@ googletag.pubads().addEventListener('slotRenderEnded', function(event) {
 	console.log( "a slot has been rendered into the div "+id );
 });
 ```
+2. 事件整理
+
