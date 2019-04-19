@@ -31,7 +31,7 @@
     btn.addEventListener('click', function (ev) {
       console.log('btn的事件');
       // ev.stopPropagation(); // 阻止冒泡
-    });
+    }, true);
     div.addEventListener('click', function (ev) {
       console.log('div的事件（btn直接父元素）');
       // ev.stopPropagation(); // 阻止冒泡
