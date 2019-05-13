@@ -1,5 +1,7 @@
 借鉴 axios 的设计理念封装基于 fetch 的网络请求函数。本文首先简要分析 axios 的使用及在项目中的封装，然后描述如何封装 fetch 函数。
 
+通过创建 axios 实例，配置不同参数，比如 url，headers（覆盖自定义 header，preflight 请求）
+
 封装的带有响应拦截器的 axios
 
 ```js
