@@ -7,7 +7,7 @@
 1. 将外部 import 的某个对象赋值给 data 对象中某个属性：   
 
 ```js
-import utils from '../lib/utils'
+import utils from '../lib../../../../services/utils/tool
 
 data {
   utils: {},
