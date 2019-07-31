@@ -147,7 +147,7 @@ Promise 作为异步数据的占位符，在整个生命周期中会有不同状
 
 Promise 整个生命周期状态可分为两个部分：未完成状态和已完成状态，其中，未完成状态只有 pending 一种情况，而已完成状态又分为 fullfilled（已兑现，`resolve`函数执行）和 rejected（被拒绝，`reject`函数执行或者 promise 处理时发生异常）两种情况，见下图：
 
-![promise state](http://ol9ge41ud.bkt.clouddn.com/promise_state.png)
+![promise state](https://raw.githubusercontent.com/xiaogliu/pic-lib/master/old/promise_state.png)
 
 _图拍引自 Secrets of the JavaScript Ninja(2nd)_
 
